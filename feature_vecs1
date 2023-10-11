@@ -4,12 +4,12 @@ audiofile = 'C:\Users\masap\OneDrive - Loughborough University\GroupProjectY3\ja
 nvecs = 100; %number of desired feature vectors
 frame_duration = 10*1e-3; % in seconds (frame is a collection of samples)
 
-function feature_vector(audiofile, nvecs, frame_duration )
+function feature_vector(audiofile, number_of_vectors, frame_duration )
     audio_info = audioinfo(audiofile);
     fs = extractfield(audio_info, 'SampleRate');
     frame_length = ceil(frame_duration * fs);
     start = 1;
-    finish = frame_length * nvecs + 1;
+    finish = frame_length * number_of_vectors ;
    % samples = [start, finish]; % code to read only a portion of the mp3 file
     [y, ~] = audioread(audiofile, 'native'); % samples);
     y1 = y(:,1);
@@ -20,23 +20,13 @@ function feature_vector(audiofile, nvecs, frame_duration )
     end
 
     audio_single_channel = y(:,1);
-    extracted_audio = audio_single_channel(start:finish,:);
-
-  %  matrix = zeros(nvecs, frame_length);
-  %  a1 = size(matrix,2);
-
-    %creating a matrix where 1 row is one feature vector  
-    vectors = [];
-    for n = 0:nvecs-1
-        feature_vector = extracted_audio((frame_length*n + 1: frame_length*(n+1)), 1);
-        a2 = length(feature_vector);
-        if a1 ~= a2
-            disp('Error, feature vector length and array storage size do not match')
-        end
-        vectors = [vectors; feature_vector.']
-       % matrix(n,:) = feature_vector.';
+    extracted_audio = audio_single_channel(start:finish,:); 
+    
+    for n = 0:number_of_vectors-1
+        %matrix of feature vectors, each matrix row is one feature vector
+        vectors = reshape(extracted_audio,[], number_of_vectors);
+        vectors = vectors.'
     end
-
+    
 
 end
-

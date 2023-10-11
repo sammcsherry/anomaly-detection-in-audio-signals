@@ -1,0 +1,3 @@
+function [check] = check_length(vector_1, vector_2)
+    check = isequal(length(vector_1),length(vector_2));
+end

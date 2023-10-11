@@ -22,11 +22,9 @@ function feature_vector(audiofile, number_of_vectors, frame_duration )
     audio_single_channel = y(:,1);
     extracted_audio = audio_single_channel(start:finish,:); 
     
-    for n = 0:number_of_vectors-1
-        %matrix of feature vectors, each matrix row is one feature vector
-        vectors = reshape(extracted_audio,[], number_of_vectors);
-        vectors = vectors.'
-    end
-    
+    %matrix of feature vectors, each matrix row is one feature vector
+    vectors = reshape(extracted_audio,[], number_of_vectors);
+    vectors = vectors.'
+       
 
 end

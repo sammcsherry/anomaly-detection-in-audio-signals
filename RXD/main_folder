@@ -1,0 +1,13 @@
+clear;
+
+audiofile = 'jar.mp3';
+number_of_vectors = 100; %number of desired feature vectors
+frame_duration = 10*1e-3; % in seconds (frame is a collection of samples)
+
+data = feature_vector(audiofile, number_of_vectors, frame_duration);
+cov(data)
+covariance_matrix = get_covariance_matrix(data, number_of_vectors);
+average_vector = get_average_vector(data, number_of_vectors);
+for i = 1:number_of_vectors
+    calculate_RXD(data(i,:), covariance_matrix, average_vector);
+end

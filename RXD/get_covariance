@@ -1,11 +1,1 @@
-function [covariance] = get_covariance(vector_1, vector_2)
-    if ~check_length(vector_1, vector_2)
-        error('vectors, not same length')
-    end
-    vector_length = length(vector_1);
-    vector_1_mean = mean(vector_1);
-    vector_2_mean = mean(vector_2);
-    normalization = (1/(vector_length-1));
 
-    covariance = normalization*sum(dot((vector_1 - vector_1_mean),(vector_2 - vector_2_mean)));
-end

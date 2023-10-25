@@ -18,7 +18,7 @@ function vectors = feature_vector(audiofile, number_of_vectors, frame_duration )
     
     %matrix of feature vectors, each matrix row is one feature vector
     vectors = reshape(extracted_audio,[], number_of_vectors);
-    vectors = vectors.'
+    vectors = vectors.';
     disp(size(vectors))
 
 end

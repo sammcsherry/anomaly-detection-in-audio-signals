@@ -1,3 +1,0 @@
-function RXD = calculate_RXD(vector,covariance_matrix, average_vector)
-    RXD = sqrt(abs((vector - average_vector).'*(inv(covariance_matrix)) * (vector - average_vector)));
-end

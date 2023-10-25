@@ -1,11 +1,12 @@
 clear;
 
 audiofile = 'tapping.mp3';
-number_of_vectors = 100; %number of desired feature vectors
+number_of_vectors = 500; %number of desired feature vectors
 frame_duration = 10*1e-3; % in seconds (frame is a collection of samples)
 length_of_sample = number_of_vectors*frame_duration;
 
 data = feature_vector(audiofile, number_of_vectors, frame_duration);
+
 average_vector = get_average_vector(data, number_of_vectors);
 covariance_matrix = get_covariance_matrix(data, average_vector, number_of_vectors);
 

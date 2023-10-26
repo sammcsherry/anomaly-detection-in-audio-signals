@@ -39,10 +39,20 @@ plot(abs(fft_shift_jar).^2), title('Frequency Domain');
 nexttile
 imagesc(abs(fft_shift_jar).^2);
 
+
+
 nexttile
-[s_jar, f_jar, t_jar ] = spectrogram(y_jar(:,1), fs_jar);
+
+M = 480;
+L = 240;
+g = hann(M,"periodic");
+Ndft = M;
+
+[s_jar, f_jar, t_jar ] = spectrogram(y_jar(:,1), g, L, Ndft, fs_jar, 'centered');
 spectrogram(y_jar(:,1), fs_jar);
 hold off;
+
+
 
 %% TAPPING:
 figure('Name','Tapping');
@@ -86,3 +96,4 @@ nexttile
 spectrogram(y_random(:,1), fs_random);
 
 hold off;
+

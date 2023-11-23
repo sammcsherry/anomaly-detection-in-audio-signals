@@ -32,3 +32,6 @@ ylabel('MFCC')
 colorbar;
 title('MFCC')
 caxis([-15 15]);
+
+%plot thresholded data 
+thresholded_data = get_threshold(anomaly_vector, time_array);

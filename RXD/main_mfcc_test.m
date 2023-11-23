@@ -1,6 +1,9 @@
 clear;
+close all;
+set(gcf,'WindowStyle','docked');
+
 %data = feature_vector(audiofile, number_of_vectors, frame_duration);
-[data, fs] = audioread('10534_SSW_20170429.ogg');
+[data, fs] = audioread('tapping.mp3');
 data = data(:, 1);
 % Define frame size and overlap in samples
 frame_duration = 10*1e-3;

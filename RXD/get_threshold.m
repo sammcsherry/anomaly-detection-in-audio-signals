@@ -8,6 +8,7 @@ function thresholded_data = get_threshold(anomaly_vector, time_array)
    
    figure,
    plot(time_array, thresholded_data), title('Thresholded Anomaly Data')
-   
+   xlabel('Time (s)');
+   ylabel('Anomaly Score');
    
 end

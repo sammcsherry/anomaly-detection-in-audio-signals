@@ -1,15 +1,17 @@
-%NOTE: Each frame is represented as a row. This is due to the MFCC output.
+%NOTE: 
+% Each frame is represented as a row. This is due to the MFCC output.
+%feature_vector currently not in use, so don't worry about its unit testing
 clear;
 close all;
 set(gcf,'WindowStyle','docked');
 % Define frame size and overlap in samples
-frameDuration = 10*1e-3;
+frameDuration = 25*1e-3;
 
 [audioData,sampleRate, frameLength] = extract_audio_data('jar.mp3', frameDuration);
 
-frameOverlapPercentage = 0.8;
-frameOverlapLength = round(frameOverlapPercentage*frameDuration);
-frameOverlapDuration = round(frameOverlapLength*sampleRate);
+frameOverlapPercentage = 0.6;
+frameOverlapLength = frameOverlapPercentage*frameLength;
+frameOverlapDuration = frameOverlapLength/sampleRate;
 
 [coeffs, delta, deltaDelta, loc] = mfcc(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);
 anomalyVector = RXDWrapperFunc(coeffs);

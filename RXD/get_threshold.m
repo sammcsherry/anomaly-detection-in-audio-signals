@@ -1,4 +1,4 @@
-function thresholded_data = get_threshold(anomaly_vector, time_array)
+function thresholded_data = get_threshold(anomaly_vector, timeArray)
 
    col_anomaly_vector = anomaly_vector';
    pd = fitdist(col_anomaly_vector, 'Normal');
@@ -7,7 +7,7 @@ function thresholded_data = get_threshold(anomaly_vector, time_array)
    thresholded_data = col_anomaly_vector;
    
    figure,
-   plot(time_array, thresholded_data), title('Thresholded Anomaly Data')
+   plot(timeArray, thresholded_data), title('Thresholded Anomaly Data')
    xlabel('Time (s)');
    ylabel('Anomaly Score');
    

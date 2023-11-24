@@ -4,7 +4,7 @@
 clear;
 close all;
 % Define frame size and overlap in samples
-frameDuration = 251e-3;
+frameDuration = 250e-3;
 
 [audioData,sampleRate, frameLength] = extract_audio_data('jar.mp3', frameDuration);
 

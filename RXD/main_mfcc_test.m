@@ -25,4 +25,5 @@ plotAnomalyScores(timeArray, anomalyVector, coeffs)
 [thresholdedData,s] = get_threshold(anomalyVector, timeArray);
 
 %remove noise from detected anomalies
-cleanedAnomalies = cleanAnomalies(thresholdedData, timeArray,s);
+N = 10; %left and right cells to average
+cleanedAnomalies = cleanAnomalies(thresholdedData, timeArray,s, N);

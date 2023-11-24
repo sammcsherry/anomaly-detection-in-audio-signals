@@ -1,15 +1,15 @@
-function cleanedAnomalies = cleanAnomalies(thresholdedData, timeArray,s)
+function cleanedAnomalies = cleanAnomalies(thresholdedData, timeArray,s, N)
    
-   data_length = length(thresholdedData);
-   average_vect = zeros(data_length, 1);
+   dataLength = length(thresholdedData);
+   averageVect = zeros(dataLength, 1);
 
-   for i = 4:data_length - 3
-        data_pts = thresholdedData(i-3:i+3);
+   for i = N+1:dataLength - N
+        data_pts = thresholdedData(i-N:i+N);
         average = mean(data_pts);
-        average_vect(i) = average;
+        averageVect(i) = average;
    end    
-   average_vect(average_vect<0.35*5*s) = 0;
-   cleanedAnomalies = average_vect;
+   averageVect(averageVect<0.5*5*s) = 0;
+   cleanedAnomalies = averageVect;
 
    figure,
    plot(timeArray, cleanedAnomalies), title('Cleaned Thresholded Anomaly Data')

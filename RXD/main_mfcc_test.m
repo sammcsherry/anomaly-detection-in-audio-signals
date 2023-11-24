@@ -3,7 +3,6 @@
 %feature_vector currently not in use, so don't worry about its unit testing
 clear;
 close all;
-set(gcf,'WindowStyle','docked');
 % Define frame size and overlap in samples
 frameDuration = 251e-3;
 

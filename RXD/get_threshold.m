@@ -1,4 +1,4 @@
-function thresholded_data = get_threshold(anomaly_vector, timeArray)
+function [thresholded_data,s] = get_threshold(anomaly_vector, timeArray)
 
    col_anomaly_vector = anomaly_vector';
    pd = fitdist(col_anomaly_vector, 'Normal');

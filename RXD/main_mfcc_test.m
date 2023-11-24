@@ -22,7 +22,7 @@ timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
 plotAnomalyScores(timeArray, anomalyVector, coeffs)
 
 %plot thresholded data 
-thresholdeData = get_threshold(anomalyVector, timeArray);
+[thresholdedData,s] = get_threshold(anomalyVector, timeArray);
 
 %remove noise from detected anomalies
-%cleanedAnomalies = cleanAnomalies(thresholded_data, timeArray)
+cleanedAnomalies = cleanAnomalies(thresholdedData, timeArray,s);

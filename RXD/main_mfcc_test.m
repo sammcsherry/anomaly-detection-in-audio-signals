@@ -3,12 +3,21 @@
 %feature_vector currently not in use, so don't worry about its unit testing
 clear;
 close all;
-% Define frame size and overlap in samples
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% USER DEFINED INPUTS:
+audiofile = 'jar.mp3';          %add test to check input string is of correct format
+frameOverlapPercentage = 0.6;   %add test to check this is defined as a decimal between 0<= x < 1
 frameDuration = 250e-3;
+% vectorLength = 500; 
 
-[audioData,sampleRate, frameLength] = extract_audio_data('jar.mp3', frameDuration);
+%Note: is is better to define a frame by feature vector length or frame
+%duration? i think length as this allows us to compare this to quantum more
+%easily but I am unsure - help.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-frameOverlapPercentage = 0.6;
+[audioData,sampleRate, frameLength] = extract_audio_data(audiofile, frameDuration);
+
 frameOverlapLength = round(frameOverlapPercentage*frameLength);
 frameOverlapDuration = frameOverlapLength/sampleRate;
 

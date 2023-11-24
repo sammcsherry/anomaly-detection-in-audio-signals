@@ -1,5 +1,6 @@
 function cleanedAnomalies = cleanAnomalies(thresholded_data, timeArray)
    
+   
     
     
    figure,

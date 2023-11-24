@@ -8,13 +8,10 @@ close all;
 %% USER DEFINED INPUTS:
 audiofile = 'jar.mp3';          %add test to check input string is of correct format
 frameOverlapPercentage = 0.6;   %add test to check this is defined as a decimal between 0<= x < 1
-frameDuration = 250e-3;
+frameDuration = 250e-3;         %in seconds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[audioData,sampleRate, frameLength] = extract_audio_data(audiofile, frameDuration);
-
-frameOverlapLength = round(frameOverlapPercentage*frameLength);
-frameOverlapDuration = frameOverlapLength/sampleRate;
+[audioData,sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
 
 [coeffs, delta, deltaDelta, loc] = mfcc(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);
 anomalyVector = RXDWrapperFunc(coeffs);
@@ -29,4 +26,3 @@ thresholdeData = get_threshold(anomalyVector, timeArray);
 
 %remove noise from detected anomalies
 %cleanedAnomalies = cleanAnomalies(thresholded_data, timeArray)
-    

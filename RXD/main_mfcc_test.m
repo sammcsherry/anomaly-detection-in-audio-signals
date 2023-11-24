@@ -10,7 +10,7 @@ frameDuration = 251e-3;
 [audioData,sampleRate, frameLength] = extract_audio_data('jar.mp3', frameDuration);
 
 frameOverlapPercentage = 0.6;
-frameOverlapLength = frameOverlapPercentageframeLength;
+frameOverlapLength = frameOverlapPercentage*frameLength;
 frameOverlapDuration = frameOverlapLength/sampleRate;
 
 [coeffs, delta, deltaDelta, loc] = mfcc(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);

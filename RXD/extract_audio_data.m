@@ -1,15 +1,9 @@
-function [audio_data,sampleRate] = extract_audio_data(audiofile, numberOfFrames, frameDuration)
-    [y, ~] = audioread(audiofile);
+function [data,sampleRate, frameLength] = extract_audio_data(audiofile, frameDuration)
+    [data, sampleRate] = audioread(audiofile);
+    frameLength = round(frameDuration* sampleRate);
    
-    if size(y, 2) == 2
+    if size(data, 2) == 2
         % take one channel
-        y = y(:, 1);
+        data = data(:, 1);
     end
-
-    audio_info = audioinfo(audiofile);
-    sampleRate = extractfield(audio_info, 'SampleRate');
-
-    % Truncate the audio data
-    finish = numberOfFrames * frameDuration * sampleRate;
-    audio_data = y(1:finish);
 end

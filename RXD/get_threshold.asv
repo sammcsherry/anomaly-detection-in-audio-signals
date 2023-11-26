@@ -1,8 +1,0 @@
-function thresholded_data = get_threshold(anomaly_vector)
-   pd = fitdist(anomaly_vector, 'Normal');
-   s = std(pd);
-   thresholded_data(anomaly_vector<3*s) = 0;
-   figure,
-   plot(thresholded_data), title{'Thresholded Anomaly Data
-    
-end

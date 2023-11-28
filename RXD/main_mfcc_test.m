@@ -6,7 +6,7 @@ close all;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% USER DEFINED INPUTS:
-audiofile = 'jar.mp3';          %add test to check input string is of correct format
+audiofile = 'AudioFiles/jar.mp3';          %add test to check input string is of correct format
 frameOverlapPercentage = 0.6;   %add test to check this is defined as a decimal between 0<= x < 1
 frameDuration = 25e-3;         %in seconds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

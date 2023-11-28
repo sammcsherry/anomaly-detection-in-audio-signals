@@ -13,6 +13,21 @@ frameDuration = 25e-3;         %in seconds
 
 [audioData,sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
 
+windowFunction = hamming(frameLength); % Hamming window
+bufferedSignal = buffer(audioData, frameLength, frameOverlapLength, 'nodelay');
+windowedFrames = bsxfun(@times, bufferedSignal, windowFunction);
+
+%fft NOT WORKING YET
+%{
+coeffs = fft(windowedFrames, [], 1);
+coeffs = coeffs.';
+coeffs(end, :) = [];
+coeffs = double(coeffs.^2);
+%isa(coeffs,'double')
+%coeffs = real(coeffs);
+%}
+
+
 %mel Spectorgram
 %[coeffs, ~, ~] = melSpectrogram(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);
 %coeffs = coeffs'; % melSpectrogram does coloums as frames so must be transposed.

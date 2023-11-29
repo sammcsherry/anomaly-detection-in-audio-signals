@@ -29,9 +29,8 @@ numCols = length(audioData)/frameLength;
 audioData_forFFT = reshape(audioData, [frameLength, numCols]);
 coeffsFFT = fft(audioData_forFFT); %NOT overlapped fft
 coeffsFFT = coeffsFFT.';
-coeffsFFT = abs(coeffsFFT).^2; % removing complex values
-%coeffsFFT(end, :) = [];
-%coeffsFFT = double(coeffsFFT.^2);
+coeffsFFT(end, :) = [];
+coeffsFFT = double(coeffsFFT.^2);
 %isa(coeffsFFT,'double')
 %coeffs = real(coeffsFFT);
 
@@ -50,17 +49,17 @@ anomalyVectorMFCC = calculateMahalanobis(coeffsMFCC);
 numberOfFrames = size(coeffsMFCC,1);
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
 timeArrayFFT = 0:25e-3:(numCols-1)*25e-3;
-
+l = length(timeArrayFFT)
 plotAnomalyScores(timeArrayFFT, anomalyVectorFFT, coeffsFFT)
 plotAnomalyScores(timeArray, anomalyVectorMEL, coeffsMEL)
 plotAnomalyScores(timeArray, anomalyVectorMFCC, coeffsMFCC)
 %plot thresholded data 
-%[thresholdedDataFFT,sFFT] = get_threshold(anomalyVectorFFT, timeArrayFFT);
+[thresholdedDataFFT,sFFT] = get_threshold(anomalyVectorFFT, timeArray);
 [thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL, timeArray);
 [thresholdedDataMFCC,sMFCC] = get_threshold(anomalyVectorMFCC, timeArray);
 
 %remove noise from detected anomalies
 N = 10; %left and right cells to average
-%cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, timeArray,sFFT, N);
-cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, timeArray,sMEL, N);
-cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC, timeArray,sMEL, N);
+cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, timeArray,sFFT, N);
+cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, timeArrayMEL,sMEL, N);
+cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC, timeArrayMFCC,sMEL, N);

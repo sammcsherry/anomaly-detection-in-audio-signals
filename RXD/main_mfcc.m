@@ -13,6 +13,9 @@ frameDuration = 250e-3;         %in seconds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [audioData,sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
 
+%Normalise audioData:
+[audioData, C,S] = normalize(audioData);
+
 %mel Spectorgram
 %[coeffs, ~, ~] = melSpectrogram(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);
 %coeffs = coeffs'; % melSpectrogram does coloums as frames so must be transposed.

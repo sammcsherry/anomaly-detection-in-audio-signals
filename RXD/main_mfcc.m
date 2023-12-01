@@ -7,19 +7,18 @@ clear;
 close all;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
-audiofile = 'AudioFiles/random.mp3';          %add test to check input string is of correct format
-frameOverlapPercentage = 0.9;   %add test to check this is defined as a decimal between 0<= x < 1
-frameDuration = 250e-3;         %in seconds
+audiofile = 'AudioFiles/jar.mp3';          %add test to check input string is of correct format
+frameOverlapPercentage = 0.7;   %add test to check this is defined as a decimal between 0<= x < 1
+frameDuration = 200e-3;         %in seconds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [audioData,sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
-
+coeffs = calculateFFT(audioData, frameLength, frameOverlapLength);
 %mel Spectorgram
 %[coeffs, ~, ~] = melSpectrogram(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);
 %coeffs = coeffs'; % melSpectrogram does coloums as frames so must be transposed.
-
 %mfcc
-[coeffs, delta, deltaDelta, loc] = mfcc(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);
-
+%[coeffs, delta, deltaDelta, loc] = mfcc(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);
+size(coeffs)
 anomalyVector = calculateMahalanobis(coeffs);
 numberOfFrames = size(coeffs,1);
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);

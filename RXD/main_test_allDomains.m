@@ -94,16 +94,16 @@ plotAnomalyScores(timeArray, thresholdedDataMFCC,'MFCC anomalies against time wi
 N = 10; %left and right cells to average
 cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, sFFT, N);
 cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, sMEL, N);
-cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC,sMEL, N);
+cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC,sMFCC, N);
 
 figure('Name','Anomalies cleaned');
 tiledlayout(1,3);
 hold on;
 
 nexttile
-plotAnomalyScores(timeArray, thresholdedDataFFT, 'FFT anomalies against time with threshold with noise reduction')
+plotAnomalyScores(timeArray, cleanedAnomaliesFFT, 'FFT anomalies against time with threshold with noise reduction')
 nexttile
-plotAnomalyScores(timeArray, thresholdedDataMEL, 'Mel Spectrogram anomalies against time with threshold with noise reduction')
+plotAnomalyScores(timeArray, cleanedAnomaliesMEL, 'Mel Spectrogram anomalies against time with threshold with noise reduction')
 nexttile
-plotAnomalyScores(timeArray, thresholdedDataMFCC,'MFCC anomalies against time with threshold with noise reduction')
+plotAnomalyScores(timeArray, cleanedAnomaliesMFCC,'MFCC anomalies against time with threshold with noise reduction')
 %~~~~~~~~

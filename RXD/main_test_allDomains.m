@@ -12,55 +12,64 @@ frameDuration = 25e-3;         %in seconds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [audioData,sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
+%audioData = normalize(audioData);
 
-
-% overlapped fft NOT WORKING YET ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-%windowFunction = hamming(frameLength); % Hamming window
-%bufferedSignal = buffer(audioData, frameLength); %, frameOverlapLength, 'nodelay');
-%windowedFrames = bsxfun(@times, bufferedSignal, windowFunction);
-
-%coeffsFFT = fft(windowedFrames, [], 1); %overlapped fft that does not work
-%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-r = rem(length(audioData), frameLength);
-audioData = audioData(1:end-r,:);
-numCols = length(audioData)/frameLength;
-audioData_forFFT = reshape(audioData, [frameLength, numCols]);
-coeffsFFT = fft(audioData_forFFT); %NOT overlapped fft
-coeffsFFT = coeffsFFT.';
-coeffsFFT = abs(coeffsFFT).^2; % removing complex values
-%coeffsFFT(end, :) = [];
-%coeffsFFT = double(coeffsFFT.^2);
-%isa(coeffsFFT,'double')
-%coeffs = real(coeffsFFT);
-
+%FFT
+coeffsFFT = calculateFFT(audioData, frameLength, frameOverlapLength);
 
 %mel Spectorgram
 [coeffsMEL, ~, ~] = melSpectrogram(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);
 coeffsMEL = coeffsMEL'; % melSpectrogram does coloums as frames so must be transposed.
 
 %mfcc
-[coeffsMFCC, delta, deltaDelta, loc] = mfcc(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);
+[coeffsMFCC, delta, deltaDelta, loc] = mfcc(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength, LogEnergy='append');
+coeffsMFCC = coeffsMFCC(12:end,:);
 
 anomalyVectorFFT = calculateMahalanobis(coeffsFFT);
 anomalyVectorMEL = calculateMahalanobis(coeffsMEL);
 anomalyVectorMFCC = calculateMahalanobis(coeffsMFCC);
 
+%normaize:
+anomalyVectorFFTnorm = normalize(anomalyVectorFFT, 'range');
+anomalyVectorMELnorm = normalize(anomalyVectorMEL, 'range');
+anomalyVectorMFCCnorm = normalize(anomalyVectorMFCC, 'range');
+
+summing =  (1/3).*((0.5.*anomalyVectorFFTnorm(12:end) ) + anomalyVectorMELnorm(12:end) + anomalyVectorMFCCnorm );
+figure, plot(summing), title('sum');
+
+%{
+%Following comment is to converge the domains.
+fft = anomalyVectorFFT;
+mfcc = anomalyVectorMEL;
+mel = anomalyVectorMFCC;
+result = conv(fft, mfcc, 'full');
+allDomains = conv(result, mel, 'full'); 
+figure, plot(allDomains), title('all domains!!');
+
+
+allDomains2 = fft.*mfcc.*mel;
+figure, plot(allDomains2), title('all domains 2 !!');
+%}
+
 numberOfFrames = size(coeffsMFCC,1);
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
-timeArrayFFT = 0:25e-3:(numCols-1)*25e-3;
 
-plotAnomalyScores(timeArrayFFT, anomalyVectorFFT, coeffsFFT)
-plotAnomalyScores(timeArray, anomalyVectorMEL, coeffsMEL)
-plotAnomalyScores(timeArray, anomalyVectorMFCC, coeffsMFCC)
+
+%plotAnomalyScores(timeArray, anomalyVectorFFTnorm)
+%plotAnomalyScores(timeArray(12:end), anomalyVectorMELnorm(12:end))
+%plotAnomalyScores(timeArray, anomalyVectorMFCCnorm)
+
+plotAnomalyScores(timeArray, anomalyVectorFFT)
+plotAnomalyScores(timeArray(12:end), anomalyVectorMEL)
+plotAnomalyScores(timeArray, anomalyVectorMFCC)
+
 %plot thresholded data 
-%[thresholdedDataFFT,sFFT] = get_threshold(anomalyVectorFFT, timeArrayFFT);
-[thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL, timeArray);
+[thresholdedDataFFT,sFFT] = get_threshold(anomalyVectorFFT, timeArray);
+[thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL, timeArray(12:end));
 [thresholdedDataMFCC,sMFCC] = get_threshold(anomalyVectorMFCC, timeArray);
 
 %remove noise from detected anomalies
 N = 10; %left and right cells to average
-%cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, timeArray,sFFT, N);
+cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, timeArray,sFFT, N);
 cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, timeArray,sMEL, N);
 cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC, timeArray,sMEL, N);

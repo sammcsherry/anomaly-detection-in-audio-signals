@@ -27,14 +27,7 @@ coeffs = double(coeffs.^2);
 %coeffs = real(coeffs);
 %}
 
-%{
-Following comment is to converge the domains.
-fft = [];
-mfcc = [];
-mel = [];
-result = convn(fft, mfcc, 'full');
-allDomains = convn(result, mel, 'full'); 
-%}
+
 
 %mel Spectorgram
 %[coeffs, ~, ~] = melSpectrogram(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);

@@ -1,9 +1,8 @@
 function anomalyVector = calculateMahalanobis(coeffs)
     averageVector = mean(coeffs, 1);
-    covarianceMatrix = cov(coeffs);
-    % Subtract the mean vector from every observation
+    epsilon = 1e-6;  % Small constant
+    covarianceMatrix = cov(coeffs) + epsilon * eye(size(coeffs, 2));
     delta = coeffs - averageVector;
-    % Calculate the Mahalanobis squared distance for all observations
-    anomalyVector = sqrt(sum((delta/covarianceMatrix) .* delta, 2)).';
+    anomalyVector = sqrt(sum((delta*pinv(covarianceMatrix)) .* delta, 2)).';
 
 end

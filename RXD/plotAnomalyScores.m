@@ -1,4 +1,4 @@
-function plotAnomalyScores(time_array, anomaly_vector, coeffs)
+function plotAnomalyScores(time_array, anomaly_vector)
     % plot the anomaly vector
     figure;
     plot(time_array, anomaly_vector);

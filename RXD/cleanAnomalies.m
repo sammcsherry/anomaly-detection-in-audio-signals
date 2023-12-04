@@ -8,7 +8,7 @@ function cleanedAnomalies = cleanAnomalies(thresholdedData, timeArray,s, N)
         average = mean(data_pts);
         averageVect(i) = average;
    end    
-   averageVect(averageVect<0.5*5*s) = 0;
+   averageVect(averageVect<0.5*4*s) = 0;
    cleanedAnomalies = averageVect;
 
    figure,

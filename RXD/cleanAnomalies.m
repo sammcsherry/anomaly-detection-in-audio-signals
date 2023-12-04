@@ -10,10 +10,4 @@ function cleanedAnomalies = cleanAnomalies(thresholdedData, timeArray,s, N)
    end    
    averageVect(averageVect<0.5*4*s) = 0;
    cleanedAnomalies = averageVect;
-
-   figure,
-   plot(timeArray, cleanedAnomalies), title('Cleaned Thresholded Anomaly Data')
-   xlabel('Time (s)');
-   ylabel('Anomaly Score');
-    
 end

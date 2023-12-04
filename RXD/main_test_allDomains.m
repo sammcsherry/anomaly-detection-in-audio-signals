@@ -58,17 +58,25 @@ timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
 %plotAnomalyScores(timeArray(12:end), anomalyVectorMELnorm(12:end))
 %plotAnomalyScores(timeArray, anomalyVectorMFCCnorm)
 
-plotAnomalyScores(timeArray, anomalyVectorFFT)
-plotAnomalyScores(timeArray, anomalyVectorMEL)
-plotAnomalyScores(timeArray, anomalyVectorMFCC)
+plotAnomalyScores(timeArray, anomalyVectorFFT, 'FFT anomalies against time')
+plotAnomalyScores(timeArray, anomalyVectorMEL, 'Mel Spectrogram anomalies against time')
+plotAnomalyScores(timeArray, anomalyVectorMFCC,'MFCC anomalies against time')
 
 %plot thresholded data 
-[thresholdedDataFFT,sFFT] = get_threshold(anomalyVectorFFT, timeArray);
-[thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL, timeArray);
-[thresholdedDataMFCC,sMFCC] = get_threshold(anomalyVectorMFCC, timeArray);
+[thresholdedDataFFT,sFFT] = get_threshold(anomalyVectorFFT);
+[thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL);
+[thresholdedDataMFCC,sMFCC] = get_threshold(anomalyVectorMFCC);
+
+plotAnomalyScores(timeArray, thresholdedDataFFT, 'FFT anomalies against time with threshold')
+plotAnomalyScores(timeArray, thresholdedDataMEL, 'Mel Spectrogram anomalies against time with threshold')
+plotAnomalyScores(timeArray, thresholdedDataMFCC,'MFCC anomalies against time with threshold')
 
 %remove noise from detected anomalies
 N = 10; %left and right cells to average
 cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, timeArray,sFFT, N);
 cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, timeArray,sMEL, N);
 cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC, timeArray,sMEL, N);
+
+plotAnomalyScores(timeArray, thresholdedDataFFT, 'FFT anomalies against time with threshold with noise reduction')
+plotAnomalyScores(timeArray, thresholdedDataMEL, 'Mel Spectrogram anomalies against time with threshold with noise reduction')
+plotAnomalyScores(timeArray, thresholdedDataMFCC,'MFCC anomalies against time with threshold with noise reduction')

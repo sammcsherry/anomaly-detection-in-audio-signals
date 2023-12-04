@@ -1,4 +1,4 @@
-function cleanedAnomalies = cleanAnomalies(thresholdedData, timeArray,s, N)
+function cleanedAnomalies = cleanAnomalies(thresholdedData ,s, N)
    
    dataLength = length(thresholdedData);
    averageVect = zeros(dataLength, 1);

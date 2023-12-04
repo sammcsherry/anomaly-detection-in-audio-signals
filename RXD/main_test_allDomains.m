@@ -3,6 +3,7 @@
 %feature_vector currently not in use, so don't worry about its unit testing
 clear;
 close all;
+set(0,'DefaultFigureWindowStyle','docked')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
@@ -58,25 +59,51 @@ timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
 %plotAnomalyScores(timeArray(12:end), anomalyVectorMELnorm(12:end))
 %plotAnomalyScores(timeArray, anomalyVectorMFCCnorm)
 
+figure('Name','Anomalies vs Time');
+tiledlayout(1,3);
+hold on;
+
+nexttile
 plotAnomalyScores(timeArray, anomalyVectorFFT, 'FFT anomalies against time')
+nexttile
 plotAnomalyScores(timeArray, anomalyVectorMEL, 'Mel Spectrogram anomalies against time')
+nexttile
 plotAnomalyScores(timeArray, anomalyVectorMFCC,'MFCC anomalies against time')
+%~~~~~~~~
+
 
 %plot thresholded data 
 [thresholdedDataFFT,sFFT] = get_threshold(anomalyVectorFFT);
 [thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL);
 [thresholdedDataMFCC,sMFCC] = get_threshold(anomalyVectorMFCC);
 
+figure('Name','Anomalies with threshold');
+tiledlayout(1,3);
+hold on;
+
+nexttile
 plotAnomalyScores(timeArray, thresholdedDataFFT, 'FFT anomalies against time with threshold')
+nexttile
 plotAnomalyScores(timeArray, thresholdedDataMEL, 'Mel Spectrogram anomalies against time with threshold')
+nexttile
 plotAnomalyScores(timeArray, thresholdedDataMFCC,'MFCC anomalies against time with threshold')
+%~~~~~~~~
+
 
 %remove noise from detected anomalies
 N = 10; %left and right cells to average
-cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, timeArray,sFFT, N);
-cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, timeArray,sMEL, N);
-cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC, timeArray,sMEL, N);
+cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, sFFT, N);
+cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, sMEL, N);
+cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC,sMEL, N);
 
+figure('Name','Anomalies cleaned');
+tiledlayout(1,3);
+hold on;
+
+nexttile
 plotAnomalyScores(timeArray, thresholdedDataFFT, 'FFT anomalies against time with threshold with noise reduction')
+nexttile
 plotAnomalyScores(timeArray, thresholdedDataMEL, 'Mel Spectrogram anomalies against time with threshold with noise reduction')
+nexttile
 plotAnomalyScores(timeArray, thresholdedDataMFCC,'MFCC anomalies against time with threshold with noise reduction')
+%~~~~~~~~

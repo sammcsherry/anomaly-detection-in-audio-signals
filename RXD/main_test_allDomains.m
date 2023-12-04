@@ -6,7 +6,7 @@ close all;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
-audiofile = 'AudioFiles/jar.mp3';          %add test to check input string is of correct format
+audiofile = 'AudioFiles/random.mp3';          %add test to check input string is of correct format
 frameOverlapPercentage = 0.6;   %add test to check this is defined as a decimal between 0<= x < 1
 frameDuration = 25e-3;         %in seconds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,7 +23,6 @@ coeffsMEL = coeffsMEL'; % melSpectrogram does coloums as frames so must be trans
 
 %mfcc
 [coeffsMFCC, delta, deltaDelta, loc] = mfcc(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength, LogEnergy='append');
-coeffsMFCC = coeffsMFCC(12:end,:);
 
 anomalyVectorFFT = calculateMahalanobis(coeffsFFT);
 anomalyVectorMEL = calculateMahalanobis(coeffsMEL);
@@ -34,7 +33,7 @@ anomalyVectorFFTnorm = normalize(anomalyVectorFFT, 'range');
 anomalyVectorMELnorm = normalize(anomalyVectorMEL, 'range');
 anomalyVectorMFCCnorm = normalize(anomalyVectorMFCC, 'range');
 
-summing =  (1/3).*((0.5.*anomalyVectorFFTnorm(12:end) ) + anomalyVectorMELnorm(12:end) + anomalyVectorMFCCnorm );
+summing =  (1/3).*((0.5.*anomalyVectorFFTnorm ) + anomalyVectorMELnorm + anomalyVectorMFCCnorm );
 figure, plot(summing), title('sum');
 
 %{
@@ -60,12 +59,12 @@ timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
 %plotAnomalyScores(timeArray, anomalyVectorMFCCnorm)
 
 plotAnomalyScores(timeArray, anomalyVectorFFT)
-plotAnomalyScores(timeArray(12:end), anomalyVectorMEL)
+plotAnomalyScores(timeArray, anomalyVectorMEL)
 plotAnomalyScores(timeArray, anomalyVectorMFCC)
 
 %plot thresholded data 
 [thresholdedDataFFT,sFFT] = get_threshold(anomalyVectorFFT, timeArray);
-[thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL, timeArray(12:end));
+[thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL, timeArray);
 [thresholdedDataMFCC,sMFCC] = get_threshold(anomalyVectorMFCC, timeArray);
 
 %remove noise from detected anomalies

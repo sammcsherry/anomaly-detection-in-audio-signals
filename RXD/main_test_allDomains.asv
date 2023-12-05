@@ -17,7 +17,6 @@ fullRXD(audiofile, frameOverlapPercentage, frameDuration, "MEL")
 fullRXD(audiofile, frameOverlapPercentage, largerFramDuration, "MFCC")
 fullRXD(audiofile, frameOverlapPercentage, frameDuration, "ALL")
 
-
 figure('Name','Anomalies vs Time');
 tiledlayout(1,3);
 hold on;

@@ -13,11 +13,19 @@ frameDuration = 25e-3;         %in seconds
 largerFramDuration = 250e-3; % just testing tee hee
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
+segments = splitAudioData(audioData, sampleRate, 60);
+numberOfSegments = size(segments,2);
 
-%[results, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate, "MEL");
-%[results, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MFCC");
-[results, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "ALL");
-figure, plotAnomalyScores(timeArray, results, "test");
+[tempFFT] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate, "FFT");
+[tempMFCC] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MFCC");
+[tempMel] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MEL");
+[results] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "ALL");
+
+numberOfFrames = size(tempFFT,2);
+timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
+
+plotAnomalyScores(timeArray, tempMel, "test")
+
 
 %{
 figure('Name','Anomalies vs Time');

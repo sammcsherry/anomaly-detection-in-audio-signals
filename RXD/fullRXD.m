@@ -1,37 +1,23 @@
-function [] = fullRXD(audioFile, frameOverlapPercentage, frameDuration, methodFlag)
+function [results, timeArray] = fullRXD(audioFile, frameOverlapPercentage, frameDuration, methodFlag)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-[audioData,sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audioFile,frameOverlapPercentage, frameDuration);
-sampleRate
-frameLength
+[audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audioFile,frameOverlapPercentage, frameDuration);
 %audioData = normalize(audioData);
 
 N = 10; %left and right cells to average - used for removing noise
 
 switch methodFlag
     case "FFT"
-        
+        results = fftXRD(audioData, frameLength, frameOverlapLength, N);
     case "MEL"
-        [coeffsMEL, ~, ~] = melSpectrogram(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);
-        coeffsMEL = coeffsMEL'; % melSpectrogram does coloums as frames so must be transposed.
-        anomalyVectorMEL = calculateMahalanobis(coeffsMEL);
-        anomalyVectorMELnorm = normalize(anomalyVectorMEL, 'range');
-        [thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL);
-        cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, sMEL, N);
+        results = melXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
     case "MFCC"
-        [coeffsMFCC, delta, deltaDelta, loc] = mfcc(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength, LogEnergy='append');
-        anomalyVectorMFCC = calculateMahalanobis(coeffsMFCC);
-        anomalyVectorMFCCnorm = normalize(anomalyVectorMFCC, 'range');
-        [thresholdedDataMFCC,sMFCC] = get_threshold(anomalyVectorMFCC);
-        cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC,sMFCC, N);
-    otherwise
-        "no flag detected using MEL"
-        [coeffsMEL, ~, ~] = melSpectrogram(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength);
-        coeffsMEL = coeffsMEL'; % melSpectrogram does coloums as frames so must be transposed.
-        anomalyVectorMEL = calculateMahalanobis(coeffsMEL);
-        anomalyVectorMELnorm = normalize(anomalyVectorMEL, 'range');
-        [thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL);
-        cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, sMEL, N);
+        results = mfccXRD(audioData, sampleRate, frameLength, frameOverlapDuration, N);
+    case "ALL"
+        tempFFT = fftXRD(audioData, frameLength, frameOverlapLength);
+        tempMEL = melXRD(audioData, frameLength, frameOverlapLength);
+        tempMFCC = mfccXRD(audioData, frameLength, frameOverlapDuration);
+        results = tempFFT.*tempMEL.*tempMFCC;
 end
 
 numberOfFrames = size(coeffsMFCC,1);

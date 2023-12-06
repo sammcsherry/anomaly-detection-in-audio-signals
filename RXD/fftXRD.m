@@ -3,6 +3,6 @@ function [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLen
 coeffsFFT = calculateFFT(audioData, frameLength, frameOverlapLength);
 anomalyVectorFFT = calculateMahalanobis(coeffsFFT);
 anomalyVectorFFTnorm = normalize(anomalyVectorFFT, 'range');
-[thresholdedDataFFT,sFFT] = get_threshold(anomalyVectorFFT);
-cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, sFFT, N);
+[thresholdedDataFFT,q10, q90] = getThreshold(anomalyVectorFFT);
+cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, q10, q90, N);
 end

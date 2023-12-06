@@ -1,12 +1,12 @@
 %for anomalies thresholded with the KERNEL distribution in function
 %get_threshold.
-function cleanedAnomalies2 = cleanAnomaliesV2(thresholdedData2, q10, q90, N)
+function cleanedAnomalies = cleanAnomalies(thresholdedData, q10, q90, N)
    
-   dataLength = length(thresholdedData2);
+   dataLength = length(thresholdedData);
    averageVect = zeros(dataLength, 1);
 
    for i = N+1:dataLength - N
-        data_pts = thresholdedData2(i-N:i+N);
+        data_pts = thresholdedData(i-N:i+N);
         average = mean(data_pts);
         averageVect(i) = average;
    end    
@@ -17,5 +17,5 @@ function cleanedAnomalies2 = cleanAnomaliesV2(thresholdedData2, q10, q90, N)
    
    averageVect(and(x1,x2)) = 0;
    
-   cleanedAnomalies2 = averageVect;
+   cleanedAnomalies = averageVect;
 end

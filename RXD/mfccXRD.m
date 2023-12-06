@@ -4,6 +4,6 @@ function [anomalyVectorMFCCnorm] = mfccXRD(audioData, sampleRate, frameLength, f
 [coeffsMFCC, ~, ~, ~] = mfcc(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength, LogEnergy='append');
 anomalyVectorMFCC = calculateMahalanobis(coeffsMFCC);
 anomalyVectorMFCCnorm = normalize(anomalyVectorMFCC, 'range');
-[thresholdedDataMFCC,sMFCC] = get_threshold(anomalyVectorMFCC);
-cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC,sMFCC, N);
+[thresholdedDataMFCC,q10, q90] = getThreshold(anomalyVectorMFCC);
+cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC,q10, q90, N);
 end

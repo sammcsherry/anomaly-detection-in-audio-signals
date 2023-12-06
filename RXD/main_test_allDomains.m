@@ -5,19 +5,23 @@ clear;
 close all;
 set(0,'DefaultFigureWindowStyle','docked')
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % USER DEFINED INPUTS:
 audiofile = 'AudioFiles/random.mp3';%add test to check input string is of correct format
 frameOverlapPercentage = 0.6;   %add test to check this is defined as a decimal between 0<= x < 1
 frameDuration = 25e-3;         %in seconds
 largerFramDuration = 250e-3; % just testing tee hee
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
 
-%[results, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate, "MEL");
-%[results, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MFCC");
-[results, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "ALL");
-figure, plotAnomalyScores(timeArray, results, "test");
+[results1, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate, "MEL");
+[results2, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MFCC");
+%[results, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "ALL");
+%figure, plotAnomalyScores(timeArray, results, "test");
+
+titles = ["MEL", "MFCC"];
+tiledPlot(timeArray, titles, results1, results2)
+
 
 %{
 figure('Name','Anomalies vs Time');

@@ -1,7 +1,7 @@
-function plotAnomalyScores(time_array, anomaly_vector, plotTitle)
+function plotAnomalyScores(timeArray, anomalyVector, plotTitle)
     % plot the anomaly vector
-    
-    plot(time_array, anomaly_vector);
+    anomalyVector
+    plot(timeArray, anomalyVector);
     xlabel('Time (s)');
     ylabel('Anomaly Score');
     title(plotTitle);

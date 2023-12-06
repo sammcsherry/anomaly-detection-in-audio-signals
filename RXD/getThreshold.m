@@ -1,6 +1,6 @@
 %kernelDist
 
-function [thresholdedData2, q10, q90] = getThreshold2(anomalyVector)
+function [thresholdedData, q10, q90] = getThreshold(anomalyVector)
     colAnomalyVector = anomalyVector';
     pd = fitdist(colAnomalyVector, 'Kernel', 'Kernel','epanechnikov');
    
@@ -15,7 +15,7 @@ function [thresholdedData2, q10, q90] = getThreshold2(anomalyVector)
 
     colAnomalyVector(and(x1,x2)) = 0;
 
-    thresholdedData2 = colAnomalyVector;
+    thresholdedData = colAnomalyVector;
     
     figure, hold on;
     plot(pd), xline(q10), xline(q90), title('helpp'), hold off;

@@ -73,9 +73,9 @@ plotAnomalyScores(timeArray, anomalyVectorMFCC,'MFCC anomalies against time')
 
 
 %plot thresholded data 
-[thresholdedDataFFT,sFFT] = get_threshold(anomalyVectorFFT);
-[thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL);
-[thresholdedDataMFCC,sMFCC] = get_threshold(anomalyVectorMFCC);
+[thresholdedDataFFT,sFFT, muFFT] = get_threshold(anomalyVectorFFT);
+[thresholdedDataMEL,sMEL, muMEL] = get_threshold(anomalyVectorMEL);
+[thresholdedDataMFCC,sMFCC, muMFCC] = get_threshold(anomalyVectorMFCC);
 
 figure('Name','Anomalies with threshold');
 tiledlayout(1,3);
@@ -92,9 +92,9 @@ plotAnomalyScores(timeArray, thresholdedDataMFCC,'MFCC anomalies against time wi
 
 %remove noise from detected anomalies
 N = 10; %left and right cells to average
-cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, sFFT, N);
-cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, sMEL, N);
-cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC,sMFCC, N);
+cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, sFFT, muFFT, N);
+cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, sMEL, muMEL, N);
+cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC,sMFCC, muMFCC, N);
 
 figure('Name','Anomalies cleaned');
 tiledlayout(1,3);
@@ -125,3 +125,6 @@ plotAnomalyScores(timeArray, cleanedAnomaliesV2MEL, 'Mel Spectrogram anomalies a
 nexttile
 plotAnomalyScores(timeArray, cleanedAnomaliesV2MFCC,'MFCC anomalies against time with threshold with noise reduction V2')
 %~~~~~~~~
+
+%threshold method 2
+thresholdedData2 = getThreshold2(anomalyVectorMFCC);

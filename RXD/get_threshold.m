@@ -7,7 +7,7 @@ function [thresholded_data,s, mu] = get_threshold(anomalyVector)
    %ci95 = paramci(pd);
 
    figure, hold on;
-   plot(pd), title('wtf'), hold off;
+   plot(pd), title('graph '), hold off;
    
    x1 = lt(mu,colAnomalyVector);
    x2 = lt(colAnomalyVector,(mu+1*s));
@@ -16,6 +16,6 @@ function [thresholded_data,s, mu] = get_threshold(anomalyVector)
    
    colAnomalyVector(and(x1,x2)) = 0;
    colAnomalyVector(and(x3,x4)) = 0;
-   
+  % colAnomalyVector(colAnomalyVector<mu+1*s)=0;
    thresholded_data = colAnomalyVector;
 end

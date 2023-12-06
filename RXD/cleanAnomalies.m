@@ -18,7 +18,6 @@ function cleanedAnomalies = cleanAnomalies(thresholdedData ,s, mu, N)
    
    averageVect(and(x1,x2)) = 0;
    averageVect(and(x3,x4)) = 0;
-
-%   averageVect(averageVect<mu+) = 0;
+   
    cleanedAnomalies = averageVect;
 end

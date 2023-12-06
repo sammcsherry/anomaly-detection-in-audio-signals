@@ -5,22 +5,26 @@ clear;
 close all;
 set(0,'DefaultFigureWindowStyle','docked')
 
-%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
 audiofile = 'AudioFiles/random.mp3';%add test to check input string is of correct format
 frameOverlapPercentage = 0.6;   %add test to check this is defined as a decimal between 0<= x < 1
 frameDuration = 25e-3;         %in seconds
 largerFramDuration = 250e-3; % just testing tee hee
-%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
+segments = splitAudioData(audioData, sampleRate, 60);
+numberOfSegments = size(segments,2);
 
-[results1, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate, "MEL");
-[results2, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MFCC");
-%[results, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "ALL");
-%figure, plotAnomalyScores(timeArray, results, "test");
+[tempFFT] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate, "FFT");
+[tempMFCC] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MFCC");
+[tempMel] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MEL");
+[results] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "ALL");
 
-titles = ["MEL", "MFCC"];
-tiledPlot(timeArray, titles, results1, results2)
+numberOfFrames = size(tempFFT,2);
+timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
+
+plotAnomalyScores(timeArray, tempMel, "test")
 
 
 %{

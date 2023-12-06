@@ -56,7 +56,7 @@ figure, plot(allDomains2), title('all domains 2 !!');
 
 numberOfFrames = size(coeffsMFCC,1);
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
-timeArray(startingDataPoint:end);
+timeArray = timeArray + startingDataPoint*(timeArray(2)- timeArray(1));
 
 %plotAnomalyScores(timeArray, anomalyVectorFFTnorm)
 %plotAnomalyScores(timeArray(12:end), anomalyVectorMELnorm(12:end))

@@ -1,7 +1,6 @@
-function [results, timeArray] = fullRXD(audioFile, frameOverlapPercentage, frameDuration, methodFlag)
+function [results, timeArray] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate, methodFlag)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-[audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audioFile,frameOverlapPercentage, frameDuration);
 %audioData = normalize(audioData);
 
 N = 10; %left and right cells to average - used for removing noise
@@ -12,15 +11,14 @@ switch methodFlag
     case "MEL"
         results = melXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
     case "MFCC"
-        results = mfccXRD(audioData, sampleRate, frameLength, frameOverlapDuration, N);
+        results = mfccXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
     case "ALL"
-        tempFFT = fftXRD(audioData, frameLength, frameOverlapLength);
-        tempMEL = melXRD(audioData, frameLength, frameOverlapLength);
-        tempMFCC = mfccXRD(audioData, frameLength, frameOverlapDuration);
-        results = tempFFT.*tempMEL.*tempMFCC;
+        tempFFT = fftXRD(audioData, frameLength, frameOverlapLength, N);
+        tempMEL = melXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
+        tempMFCC = mfccXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
+        results = tempFFT+tempMEL+tempMFCC;
 end
-
-numberOfFrames = size(coeffsMFCC,1);
+numberOfFrames = size(results,2);
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
 
 

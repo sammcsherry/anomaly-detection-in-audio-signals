@@ -1,8 +1,21 @@
-function [thresholded_data,s] = get_threshold(anomaly_vector)
+function [thresholded_data,s, mu] = get_threshold(anomalyVector)
 
-   col_anomaly_vector = anomaly_vector';
-   pd = fitdist(col_anomaly_vector, 'Normal');
+   colAnomalyVector = anomalyVector';
+   pd = fitdist(colAnomalyVector, 'Normal');
    s = std(pd);   
-   col_anomaly_vector(col_anomaly_vector<4*s) = 0;
-   thresholded_data = col_anomaly_vector;
+   mu = mean(pd);
+   %ci95 = paramci(pd);
+
+   figure, hold on;
+   plot(pd), title('wtf'), hold off;
+   
+   x1 = lt(mu,colAnomalyVector);
+   x2 = lt(colAnomalyVector,(mu+1*s));
+   x3 = gt(mu,colAnomalyVector);
+   x4 = gt(colAnomalyVector,(mu-1*s));
+   
+   colAnomalyVector(and(x1,x2)) = 0;
+   colAnomalyVector(and(x3,x4)) = 0;
+   
+   thresholded_data = colAnomalyVector;
 end

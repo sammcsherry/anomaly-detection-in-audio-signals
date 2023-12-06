@@ -9,7 +9,7 @@ set(0,'DefaultFigureWindowStyle','docked')
 % USER DEFINED INPUTS:
 audiofile = 'AudioFiles/random.mp3';          %add test to check input string is of correct format
 frameOverlapPercentage = 0.6;   %add test to check this is defined as a decimal between 0<= x < 1
-frameDuration = 25e-3;         %in seconds
+frameDuration = 150e-3;         %in seconds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [audioData,sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
@@ -109,10 +109,29 @@ plotAnomalyScores(timeArray, cleanedAnomaliesMFCC,'MFCC anomalies against time w
 %~~~~~~~~
 
 
-%matlab smoothed data function? test 
-cleanedAnomaliesV2FFT = cleanAnomaliesV2(thresholdedDataFFT);
-cleanedAnomaliesV2MEL = cleanAnomaliesV2(thresholdedDataMEL);
-cleanedAnomaliesV2MFCC = cleanAnomaliesV2(thresholdedDataMFCC);
+
+
+%threshold method 2, 
+[thresholdedData2FFT, q10FFT, q90FFT] = getThreshold2(anomalyVectorFFT);
+[thresholdedData2MEL, q10MEL, q90MEL] = getThreshold2(anomalyVectorMEL);
+[thresholdedData2MFCC, q10MFCC, q90MFCC] = getThreshold2(anomalyVectorMFCC);
+
+figure('Name','Anomalies Kernel');
+tiledlayout(1,3);
+hold on;
+
+nexttile
+plotAnomalyScores(timeArray, thresholdedData2FFT, 'FFT anomalies against time with threshold with kernel dist threshold')
+nexttile
+plotAnomalyScores(timeArray, thresholdedData2MEL, 'Mel Spectrogram anomalies against time with threshold with kernel dist threshold2')
+nexttile
+plotAnomalyScores(timeArray, thresholdedData2MFCC,'MFCC anomalies against time with kernel dist threshold')
+
+
+%cleaned V2
+cleanedAnomaliesV2FFT = cleanAnomaliesV2(thresholdedDataFFT, q10FFT, q90FFT, N);
+cleanedAnomaliesV2MEL = cleanAnomaliesV2(thresholdedDataMEL, q10MEL, q90MEL, N);
+cleanedAnomaliesV2MFCC = cleanAnomaliesV2(thresholdedDataMFCC, q10MFCC, q90MFCC, N);
 
 figure('Name','Anomalies cleaned V2');
 tiledlayout(1,3);
@@ -124,7 +143,5 @@ nexttile
 plotAnomalyScores(timeArray, cleanedAnomaliesV2MEL, 'Mel Spectrogram anomalies against time with threshold with noise reduction V2')
 nexttile
 plotAnomalyScores(timeArray, cleanedAnomaliesV2MFCC,'MFCC anomalies against time with threshold with noise reduction V2')
+%}
 %~~~~~~~~
-
-%threshold method 2
-thresholdedData2 = getThreshold2(anomalyVectorMFCC);

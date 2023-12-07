@@ -15,8 +15,7 @@ function [results] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration
             tempFFT = fftXRD(audioData, frameLength, frameOverlapLength, N);
             tempMEL = melXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
             tempMFCC = mfccXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
-            results = [tempFFT,tempMEL,tempMFCC];
-         
+            results = [tempFFT; tempMEL; tempMFCC];
     end
     
     %summing =  (1/3).*((0.5.*anomalyVectorFFTnorm ) + anomalyVectorMELnorm + anomalyVectorMFCCnorm );

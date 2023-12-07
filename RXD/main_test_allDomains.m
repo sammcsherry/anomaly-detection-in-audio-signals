@@ -31,28 +31,15 @@ timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration, st
 
 plotTitles = ["FFT", "Mel", "MFCC"];
 figTitle = "Anomalies vs Time";
-tiledPlot(timeArray, plotTitles, figTitle, tempFFT, tempMel, tempMFCC )
+%tiledPlot(timeArray, plotTitles, figTitle, tempFFT, tempMel, tempMFCC )
 
-%res1 = results(:,1);
-%res2 = results(:,2);
-%res3 = results(:,3);
-%tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
-
-
-
+res1 = results(1,:);
+res2 = results(2,:);
+res3 = results(3,:);
+tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
 
 
 %{
-figure('Name','Anomalies vs Time');
-tiledlayout(1,3);
-hold on;
-nexttile
-plotAnomalyScores(timeArray, anomalyVectorFFT, 'FFT anomalies against time')
-nexttile
-plotAnomalyScores(timeArray, anomalyVectorMEL, 'Mel Spectrogram anomalies against time')
-nexttile
-plotAnomalyScores(timeArray, anomalyVectorMFCC,'MFCC anomalies against time')
-%~~~~~~~~
 
 
 % %plot thresholded data 
@@ -90,20 +77,5 @@ plotAnomalyScores(timeArray, cleanedAnomaliesMEL, 'Mel Spectrogram anomalies aga
 nexttile
 plotAnomalyScores(timeArray, cleanedAnomaliesMFCC,'MFCC anomalies against time with threshold with noise reduction')
 %~~~~~~~~
-% %matlab smoothed data function? test 
-% cleanedAnomaliesV2FFT = cleanAnomaliesV2(thresholdedDataFFT);
-% cleanedAnomaliesV2MEL = cleanAnomaliesV2(thresholdedDataMEL);
-% cleanedAnomaliesV2MFCC = cleanAnomaliesV2(thresholdedDataMFCC);
-% 
-% figure('Name','Anomalies cleaned V2');
-% tiledlayout(1,3);
-% hold on;
-% 
-% nexttile
-% plotAnomalyScores(timeArray, cleanedAnomaliesV2FFT, 'FFT anomalies against time with threshold with noise reduction V2')
-% nexttile
-% plotAnomalyScores(timeArray, cleanedAnomaliesV2MEL, 'Mel Spectrogram anomalies against time with threshold with noise reduction V2')
-% nexttile
-% plotAnomalyScores(timeArray, cleanedAnomaliesV2MFCC,'MFCC anomalies against time with threshold with noise reduction V2')
-% %~~~~~~~~
+
 %}

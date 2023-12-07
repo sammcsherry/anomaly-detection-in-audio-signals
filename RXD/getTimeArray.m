@@ -1,4 +1,4 @@
-function timeArray = getTimeArray(numberOfFrames, frameDuration, overlapDuration)
+function timeArray = getTimeArray(numberOfFrames, frameDuration, overlapDuration, startingDataPoint)
     timeStep = frameDuration - overlapDuration;
-    timeArray = (0:numberOfFrames-1) * timeStep;
+    timeArray = (startingDataPoint-1:numberOfFrames-1) * timeStep;
 end

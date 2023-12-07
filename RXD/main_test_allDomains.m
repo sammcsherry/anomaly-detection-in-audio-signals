@@ -26,17 +26,17 @@ startingDataPoint = 1;
 [tempMel] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MEL");
 [results] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "ALL");
 
-numberOfFrames = size(tempFFT,2);
+numberOfFrames = size(tempFFT,2); %how can we genralise this?
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration, startingDataPoint);
 
 plotTitles = ["FFT", "Mel", "MFCC"];
 figTitle = "Anomalies vs Time";
-%tiledPlot(timeArray, plotTitles, figTitle, tempFFT, tempMel, tempMFCC )
+tiledPlot(timeArray, plotTitles, figTitle, tempFFT, tempMel, tempMFCC )
 
-res1 = results(:,1);
-res2 = results(:,2);
-res3 = results(:,3);
-tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
+%res1 = results(:,1);
+%res2 = results(:,2);
+%res3 = results(:,3);
+%tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
 
 
 

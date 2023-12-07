@@ -7,15 +7,23 @@ function [results] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration
     switch methodFlag
         case "FFT"
             results = fftXRD(audioData, frameLength, frameOverlapLength, N);
+            finalAnomalies = cleanRXDwrapperFunc(results);
         case "MEL"
             results = melXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
+            finalAnomalies = cleanRXDwrapperFunc(results);
         case "MFCC"
             results = mfccXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
+            finalAnomalies = cleanRXDwrapperFunc(results);
         case "ALL"
             tempFFT = fftXRD(audioData, frameLength, frameOverlapLength, N);
-            tempMEL = melXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
+            tempMel = melXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
             tempMFCC = mfccXRD(audioData, sampleRate, frameLength, frameOverlapLength, N);
-            results = [tempFFT; tempMEL; tempMFCC];
+            results = [tempFFT; tempMel; tempMFCC];
+
+            finalAnomaliesTempFFT = cleanRXDwrapperFunc(tempFFT);
+            finalAnomaliesTempMel = cleanRXDwrapperFunc(tempMel);
+            finalAnomaliesTempMFCC = cleanRXDwrapperFunc(tempMFCC);
+            finalAnomalies = [finalAnomaliesTempFFT; finalAnomaliesTempMel; finalAnomaliesTempMFCC];
     end
     
     %summing =  (1/3).*((0.5.*anomalyVectorFFTnorm ) + anomalyVectorMELnorm + anomalyVectorMFCCnorm );

@@ -1,4 +1,4 @@
-%clean round 3
+%clean round 2
 function cleanedX2 = cleanAnomaliesX2(cleanAnomalies)
     MaxVal = max(cleanAnomalies);
     MinVal = min(cleanAnomalies);

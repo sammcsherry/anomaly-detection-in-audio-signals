@@ -17,21 +17,22 @@ segments = splitAudioData(audioData, sampleRate, 60);
 numberOfSegments = size(segments,2);
 
 %remove silence at start of audio file:
-%[audioData, startingDataPoint] = removeSilence(audioData);
-startingDataPoint = 1;
-%note: need help changing time array to match removing silnece
+[audioData, startingDataPoint] = removeSilence(audioData);
 
 [tempFFT] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate, "FFT");
 [tempMFCC] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MFCC");
 [tempMel] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MEL");
 [results] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "ALL");
 
-numberOfFrames = size(tempFFT,2); %how can we genralise this?
+numberOfFrames = size(tempFFT,2); 
+
+%is adjustment needed on the time array?
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration, startingDataPoint);
 
+%plotting:
 plotTitles = ["FFT", "Mel", "MFCC"];
 figTitle = "Anomalies vs Time";
-%tiledPlot(timeArray, plotTitles, figTitle, tempFFT, tempMel, tempMFCC )
+tiledPlot(timeArray, plotTitles, figTitle, tempFFT, tempMel, tempMFCC )
 
 res1 = results(1,:);
 res2 = results(2,:);

@@ -16,15 +16,30 @@ largerFramDuration = 250e-3; % just testing tee hee
 segments = splitAudioData(audioData, sampleRate, 60);
 numberOfSegments = size(segments,2);
 
+%remove silence at start of audio file:
+%[audioData, startingDataPoint] = removeSilence(audioData);
+startingDataPoint = 1;
+%note: need help changing time array to match removing silnece
+
 [tempFFT] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate, "FFT");
 [tempMFCC] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MFCC");
 [tempMel] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "MEL");
 [results] = fullRXD(audioData, frameOverlapLength, frameOverlapDuration, frameLength, frameDuration, sampleRate,  "ALL");
 
 numberOfFrames = size(tempFFT,2);
-timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
+timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration, startingDataPoint);
 
-plotAnomalyScores(timeArray, tempMel, "test")
+plotTitles = ["FFT", "Mel", "MFCC"];
+figTitle = "Anomalies vs Time";
+%tiledPlot(timeArray, plotTitles, figTitle, tempFFT, tempMel, tempMFCC )
+
+res1 = results(:,1);
+res2 = results(:,2);
+res3 = results(:,3);
+tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
+
+
+
 
 
 %{

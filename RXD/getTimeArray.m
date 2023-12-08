@@ -1,5 +1,7 @@
-function timeArray = getTimeArray(numberOfFrames, frameDuration, overlapDuration, startingDataPoint)
+function timeArray = getTimeArray(numberOfFrames, frameDuration, frameLength, overlapDuration, startingDataPoint)
     timeStep = frameDuration - overlapDuration;
     timeArray = (0:numberOfFrames-1) * timeStep;
-  %  timeArray = timeArray + startingDataPoint * timeStep;
+    %correction for removing silent audio at start:
+    correction = (startingDataPoint-1)*(frameDuration/frameLength);
+    timeArray = timeArray + correction;
 end

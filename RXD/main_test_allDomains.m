@@ -7,7 +7,7 @@ set(0,'DefaultFigureWindowStyle','docked')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
-audiofile = 'AudioFiles/random.mp3';%add test to check input string is of correct format
+audiofile = 'AudioFiles/tapping.mp3';%add test to check input string is of correct format
 frameOverlapPercentage = 0.6;   %add test to check this is defined as a decimal between 0<= x < 1
 frameDuration = 25e-3;         %in seconds
 largerFramDuration = 250e-3; % just testing tee hee
@@ -27,7 +27,7 @@ numberOfSegments = size(segments,2);
 numberOfFrames = size(tempFFT,2); 
 
 %is adjustment needed on the time array?
-timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration, startingDataPoint);
+timeArray = getTimeArray(numberOfFrames, frameDuration, frameLength, frameOverlapDuration, startingDataPoint);
 
 %plot cleaned anomaly scores:
 finalAnomalies1 = cleanRXDwrapperFunc(tempFFT, .9, 10);

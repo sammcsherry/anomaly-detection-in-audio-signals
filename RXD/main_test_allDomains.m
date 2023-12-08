@@ -39,6 +39,8 @@ res2 = results(2,:);
 res3 = results(3,:);
 tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
 
+finalAnomalies = cleanRXDwrapperFunc(tempMFCC, 10);
+figure, plot(finalAnomalies), title('plot 1')
 
 %{
 

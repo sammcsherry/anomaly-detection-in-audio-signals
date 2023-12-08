@@ -1,5 +1,5 @@
-function finalAnomalies = cleanRXDwrapperFunc(anomalyVector, N)
-    [thresholdedData, q90] = getThreshold(anomalyVector);
-    cleanedAnomalies = cleanAnomalies(thresholdedData, q90, N);
+function finalAnomalies = cleanRXDwrapperFunc(anomalyVector, setThreshold, N)
+    thresholdedData = getThreshold(anomalyVector, setThreshold);
+    cleanedAnomalies = cleanAnomalies(thresholdedData, N);
     finalAnomalies = cleanedAnomalies;
 end

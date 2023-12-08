@@ -29,7 +29,16 @@ numberOfFrames = size(tempFFT,2);
 %is adjustment needed on the time array?
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration, startingDataPoint);
 
+%plot cleaned anomaly scores:
+finalAnomalies1 = cleanRXDwrapperFunc(tempFFT, .9, 10);
+finalAnomalies2 = cleanRXDwrapperFunc(tempMel, .9, 10);
+finalAnomalies3 = cleanRXDwrapperFunc(tempMFCC, .9, 10);
+plotTitles = ["FFT", "Mel", "MFCC"];
+figTitle = "Clean Anomalies vs Time";
+tiledPlot(timeArray, plotTitles, figTitle, finalAnomalies1, finalAnomalies2, finalAnomalies3)
+
 %plotting:
+%{
 plotTitles = ["FFT", "Mel", "MFCC"];
 figTitle = "Anomalies vs Time";
 tiledPlot(timeArray, plotTitles, figTitle, tempFFT, tempMel, tempMFCC )
@@ -38,47 +47,4 @@ res1 = results(1,:);
 res2 = results(2,:);
 res3 = results(3,:);
 tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
-
-finalAnomalies = cleanRXDwrapperFunc(tempMFCC, 10);
-figure, plot(finalAnomalies), title('plot 1')
-
-%{
-
-
-% %plot thresholded data 
-[thresholdedDataFFT,sFFT] = get_threshold(anomalyVectorFFT);
-[thresholdedDataMEL,sMEL] = get_threshold(anomalyVectorMEL);
-[thresholdedDataMFCC,sMFCC] = get_threshold(anomalyVectorMFCC);
-
-figure('Name','Anomalies with threshold');
-tiledlayout(1,3);
-hold on;
-
-nexttile
-plotAnomalyScores(timeArray, thresholdedDataFFT, 'FFT anomalies against time with threshold')
-nexttile
-plotAnomalyScores(timeArray, thresholdedDataMEL, 'Mel Spectrogram anomalies against time with threshold')
-nexttile
-plotAnomalyScores(timeArray, thresholdedDataMFCC,'MFCC anomalies against time with threshold')
-%~~~~~~~~
-
-
-%remove noise from detected anomalies
-N = 10; %left and right cells to average
-cleanedAnomaliesFFT = cleanAnomalies(thresholdedDataFFT, sFFT, N);
-cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, sMEL, N);
-cleanedAnomaliesMFCC = cleanAnomalies(thresholdedDataMFCC,sMFCC, N);
-
-figure('Name','Anomalies cleaned');
-tiledlayout(1,3);
-hold on;
-
-nexttile
-plotAnomalyScores(timeArray, cleanedAnomaliesFFT, 'FFT anomalies against time with threshold with noise reduction')
-nexttile
-plotAnomalyScores(timeArray, cleanedAnomaliesMEL, 'Mel Spectrogram anomalies against time with threshold with noise reduction')
-nexttile
-plotAnomalyScores(timeArray, cleanedAnomaliesMFCC,'MFCC anomalies against time with threshold with noise reduction')
-%~~~~~~~~
-
 %}

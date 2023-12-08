@@ -1,7 +1,5 @@
 %for anomalies thresholded with the KERNEL distribution in function
-%get_threshold.
-function cleanedAnomalies = cleanAnomalies(thresholdedData, q90, N)
-   
+function cleanedAnomalies = cleanAnomalies(thresholdedData, N)
    dataLength = length(thresholdedData);
    averageVect = zeros(dataLength, 1);
 
@@ -10,11 +8,13 @@ function cleanedAnomalies = cleanAnomalies(thresholdedData, q90, N)
         average = mean(data_pts);
         averageVect(i) = average;
    end    
-   %CHECK STATISTICAL VALIDITY OF RESCALE!!!!!
-   rescaleTest = 1.5;
-   x2 = lt(averageVect*rescaleTest,q90);
+   %current code consideres end cases to have an average of zero.
+   %this could be rewritten to consider a one-sided average in this case.
+
+   %figure, plot(averageVect), title('average vect');
+
+   %new dist and new threshold
+   col2row = averageVect';
+   cleanedAnomalies = getThreshold(col2row, 0.90);
    
-   averageVect(x2) = 0;
-   
-   cleanedAnomalies = averageVect;
 end

@@ -5,6 +5,6 @@ function [anomalyVectorMELnorm] = melXRD(audioData, sampleRate, frameLength, fra
     coeffsMEL = coeffsMEL'; % melSpectrogram does coloums as frames so must be transposed.
     anomalyVectorMEL = calculateMahalanobis(coeffsMEL);
     anomalyVectorMELnorm = normalize(anomalyVectorMEL, 'range');
-    [thresholdedDataMEL,q10, q90] = getThreshold(anomalyVectorMEL);
-    cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, q10, q90, N);
+    [thresholdedDataMEL, q90] = getThreshold(anomalyVectorMEL);
+    cleanedAnomaliesMEL = cleanAnomalies(thresholdedDataMEL, q90, N);
 end

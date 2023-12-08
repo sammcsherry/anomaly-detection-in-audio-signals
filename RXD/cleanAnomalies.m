@@ -13,8 +13,18 @@ function cleanedAnomalies = cleanAnomalies(thresholdedData, N)
 
    %figure, plot(averageVect), title('average vect');
 
-   %new dist and new threshold
-   col2row = averageVect';
-   cleanedAnomalies = getThreshold(col2row, 0.90);
+   %dist and new threshold:
+   col2row = averageVect;
+   pd = fitdist(col2row, 'Normal' );
+   mu = mean(pd);
+   sd = std(pd);
+
+   ineq = lt(col2row, mu+3*sd); 
+   col2row(ineq) = 0;
+
+   figure, hold on;
+   plot(pd), xline(mu+3*sd), title('average data and applied dist'), hold off;
+   
+   cleanedAnomalies = col2row;
    
 end

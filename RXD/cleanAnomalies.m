@@ -1,5 +1,6 @@
-%for anomalies thresholded with the KERNEL distribution in function
 function cleanedAnomalies = cleanAnomalies(thresholdedData, N)
+%thresholdedData = input data is the RXD results;
+%N = number of data points either side included in the average
    dataLength = length(thresholdedData);
    averageVect = zeros(dataLength, 1);
 
@@ -14,17 +15,15 @@ function cleanedAnomalies = cleanAnomalies(thresholdedData, N)
    %figure, plot(averageVect), title('average vect');
 
    %dist and new threshold:
-   col2row = averageVect;
-   pd = fitdist(col2row, 'Normal' );
+   pd = fitdist(averageVect, 'Normal' );
    mu = mean(pd);
    sd = std(pd);
 
-   ineq = lt(col2row, mu+3*sd); 
-   col2row(ineq) = 0;
+   ineq = lt(averageVect, mu+2.5*sd); 
+   averageVect(ineq) = 0;
 
-   figure, hold on;
-   plot(pd), xline(mu+3*sd), title('average data and applied dist'), hold off;
+  % figure, hold on;
+  % plot(pd), xline(mu+2.5*sd), title('Normal dist with threshold'), hold off;
    
-   cleanedAnomalies = col2row;
-   
+   cleanedAnomalies = averageVect;
 end

@@ -1,0 +1,21 @@
+clear;
+audioFile = "tapping.mp3";
+audioPath = "AudioFiles/" + audioFile;
+domain = "FFT";
+
+randomAnomalyTimes = [7.2, 108.8, 111.1, 117.1];
+randomAnomalyWidths = [1.2, 1.1, 0.6, 1.1];
+
+tappingAnomalyTimes = [44.2, 42.8];
+tappingAnomalyWidths = [1.7, 2.6];
+
+jarAnomalyTimes = [46.9, 47.];
+
+frameDurations = 1e-3:1e-3:100e-3;
+[fitness, timeTaken] = sweepFrameDuration(audioPath, frameDurations, domain, randomAnomalyTimes, randomAnomalyWidths);
+
+plotTitles = ["Fitness vs Frame Duration", "Time Taken vs Frame Duration"];
+figTitle = domain + " with varying Frame Durations for " + audioFile;
+xLabels = ["Frame Durations (s)", "Frame Durations (s)"];
+yLabels = ["Fitness", "Execution Time"];
+tiledPlot(frameDurations, plotTitles, figTitle, xLabels, yLabels, fitness, timeTaken);

@@ -7,9 +7,10 @@ set(0,'DefaultFigureWindowStyle','docked')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
-audiofile = 'AudioFiles/random.mp3';%add test to check input string is of correct format
+% 1kHzSinPureTone.mp3
+audiofile = 'AudioFiles/10534_SSW_20170429.ogg';%add test to check input string is of correct format
 frameOverlapPercentage = 0.6;   %add test to check this is defined as a decimal between 0<= x < 1
-frameDuration = 25e-3;         %in seconds
+frameDuration = 100e-3;         %in seconds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
 segments = splitAudioData(audioData, sampleRate, 60);
@@ -38,6 +39,7 @@ plotTitles = ["FFT", "Mel", "MFCC"];
 figTitle = "Clean Anomalies vs Time";
 xLabels = ["Time (s)", "Time (s)", "Time (s)"]; % "jank for now will fix later" - Adam
 yLabels = ["Clean Anomalies", "Clean Anomalies", "Clean Anomalies"]; % "had to do it to em" - Adam
+%tiledPlot(timeArray, plotTitles, figTitle, xLabels, yLabels, tempFFT, tempMEL, tempMFCC)
 tiledPlot(timeArray, plotTitles, figTitle, xLabels, yLabels, finalAnomalies1, finalAnomalies2, finalAnomalies3)
 
 %plotting:

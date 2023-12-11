@@ -1,4 +1,4 @@
-function [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLength, N, setThreshold)
+function [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLength)
     % performs the steps of xrd with fft processing
     coeffsFFT = calculateFFT(audioData, frameLength, frameOverlapLength);
     anomalyVectorFFT = calculateMahalanobis(coeffsFFT);

@@ -1,4 +1,4 @@
-function [anomalyVectorMFCCnorm] = mfccXRD(audioData, sampleRate, frameLength, frameOverlapLength, N, setThreshold)
+function [anomalyVectorMFCCnorm] = mfccXRD(audioData, sampleRate, frameLength, frameOverlapLength)
     %UNTITLED4 Summary of this function goes here
     %   Detailed explanation goes here
     [coeffsMFCC, ~, ~, ~] = mfcc(audioData, sampleRate, 'WindowLength', frameLength, 'OverlapLength', frameOverlapLength, LogEnergy='append');

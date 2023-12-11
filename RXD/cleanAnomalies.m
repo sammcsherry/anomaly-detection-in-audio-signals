@@ -5,8 +5,8 @@ function cleanedAnomalies = cleanAnomalies(thresholdedData, N)
    averageVect = zeros(dataLength, 1);
 
    for i = N+1:dataLength - N
-        data_pts = thresholdedData(i-N:i+N);
-        average = mean(data_pts);
+        dataPts = thresholdedData(i-N:i+N);
+        average = mean(dataPts);
         averageVect(i) = average;
    end    
    %current code consideres end cases to have an average of zero.

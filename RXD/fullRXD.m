@@ -1,4 +1,4 @@
-function [results] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, methodFlag)
+function [finalAnomalies] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, methodFlag)
     %UNTITLED Summary of this function goes here
     %   Detailed explanation goes here
     %audioData = normalize(audioData);

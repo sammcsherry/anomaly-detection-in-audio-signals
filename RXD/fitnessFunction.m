@@ -5,9 +5,9 @@ cost = 0;
 for frame = 1:length(anomalies)
     time = frame/sampleRate;
     for index = 1:length(expectedAnomalyTimes)
-        anomalyLowerBound = expectedAnomalyTimes(index) - expectedAnomalyWidths(index);
-        anomalyUpperBound = expectedAnomalyTimes(index) + expectedAnomalyWidths(index);
-        if time > anomalyLowerBound || time < anomalyUpperBound
+        anomalyLowerBound = expectedAnomalyTimes(index) - expectedAnomalyWidths(index)/2;
+        anomalyUpperBound = expectedAnomalyTimes(index) + expectedAnomalyWidths(index)/2;
+        if time > anomalyLowerBound && time < anomalyUpperBound
             cost = cost + anomalies(frame);
         else
             cost = cost - anomalies(frame);

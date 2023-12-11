@@ -27,16 +27,6 @@ numberOfSegments = size(segments,2);
 
 numberOfFrames = size(tempFFT,2); 
 
-<<<<<<< Updated upstream
-randomAnomalyTimes = [7.2, 108.8, 111.1, 117.1];
-randomAnomalyWidths = [1.2, 1.1, 0.6, 1.1];
-tappingAnomalyTimes = [44.2, 42.8];
-tappingAnomalyWidths = [1.7, 2.6];
-
-fitness = fitnessFunction(tempFFT, sampleRate, randomAnomalyTimes, randomAnomalyWidths);
-
-=======
->>>>>>> Stashed changes
 %is adjustment needed on the time array?
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameLength, frameOverlapDuration, startingDataPoint);
 

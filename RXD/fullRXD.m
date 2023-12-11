@@ -1,31 +1,6 @@
-<<<<<<< Updated upstream
-function [finalAnomalies] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, methodFlag)
-    %UNTITLED Summary of this function goes here
-    %   Detailed explanation goes here
-    %audioData = normalize(audioData);
-    %segmentSize = size(audioData)
-    N = 10; %left and right cells to average - used for removing noise
-    setThreshold = 0.9;
-    switch methodFlag
-        case "FFT"
-            results = fftXRD(audioData, frameLength, frameOverlapLength, N, setThreshold);
-            finalAnomalies = cleanRXDwrapperFunc(results,setThreshold, N);
-        case "MEL"
-            results = melXRD(audioData, sampleRate, frameLength, frameOverlapLength, N, setThreshold);
-            finalAnomalies = cleanRXDwrapperFunc(results,setThreshold, N);
-        case "MFCC"
-            results = mfccXRD(audioData, sampleRate, frameLength, frameOverlapLength, N, setThreshold);
-            finalAnomalies = cleanRXDwrapperFunc(results, setThreshold, N);
-        case "ALL"
-            tempFFT = fftXRD(audioData, frameLength, frameOverlapLength, N, setThreshold);
-            tempMel = melXRD(audioData, sampleRate, frameLength, frameOverlapLength, N, setThreshold);
-            tempMFCC = mfccXRD(audioData, sampleRate, frameLength, frameOverlapLength, N, setThreshold);
-            results = [tempFFT; tempMel; tempMFCC];
-=======
 function [varargout] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, varargin)
 % computes the RXD algorithm on input data
 nRequiredArgs = 4;
->>>>>>> Stashed changes
 
 % setting default values
 N = 10; %left and right cells to average - used for removing noise
@@ -60,7 +35,6 @@ if nargin > nRequiredArgs
                 tempMel = melXRD(audioData, sampleRate, frameLength, frameOverlapLength);
                 tempMFCC = mfccXRD(audioData, sampleRate, frameLength, frameOverlapLength);
                 results = [tempFFT; tempMel; tempMFCC];
-                size(results)
                 %finalAnomaliesTempFFT = cleanRXDwrapperFunc(tempFFT,setThreshold, N);
                 %finalAnomaliesTempMel = cleanRXDwrapperFunc(tempMel,setThreshold, N);
                 %finalAnomaliesTempMFCC = cleanRXDwrapperFunc(tempMFCC, setThreshold,N);

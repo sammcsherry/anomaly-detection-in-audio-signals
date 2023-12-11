@@ -1,7 +1,7 @@
 clear;
-audioFile = "11254_COR_20190904.ogg";
+audioFile = "1kHzSinWithSquares.wav";
 audioPath = "AudioFiles/" + audioFile;
-domain = "FFT";
+domain = "MFCC";
 
 randomAnomalyTimes = [7.2, 108.8, 111.1, 117.1];
 randomAnomalyWidths = [1.2, 1.1, 0.6, 1.1];
@@ -18,8 +18,12 @@ CORAnomalyWidths = [2.2];
 SSWAnomalyTimes = [84.3, 321.5, 442.3];
 SSWAnomalyWidths = [1.8, 1.3, 1.7];
 
+sinWithSquaresAnomalyTimes = [3, 5, 5.5, 7];
+sinWithSquaresAnomalyWidths = [0.001, 0.001, 0.001, 0.01];
+
+
 frameDurations = 10e-3:1e-3:100e-3;
-[fitness, timeTaken] = sweepFrameDuration(audioPath, frameDurations, domain, CORAnomalyTimes, CORAnomalyWidths);
+[fitness, timeTaken] = sweepFrameDuration(audioPath, frameDurations, domain, sinWithSquaresAnomalyTimes, sinWithSquaresAnomalyWidths);
 
 plotTitles = ["Fitness vs Frame Duration", "Time Taken vs Frame Duration"];
 figTitle = domain + " with varying Frame Durations for " + audioFile;

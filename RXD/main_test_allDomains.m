@@ -8,9 +8,9 @@ set(0,'DefaultFigureWindowStyle','docked')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
 % 1kHzSinPureTone.mp3
-audiofile = 'AudioFiles/10534_SSW_20170429.ogg';%add test to check input string is of correct format
+audiofile = 'AudioFiles/jar.mp3';%add test to check input string is of correct format
 frameOverlapPercentage = 0.6;   %add test to check this is defined as a decimal between 0<= x < 1
-frameDuration = 100e-3;         %in seconds
+frameDuration = 25e-4;         %in seconds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
 segments = splitAudioData(audioData, sampleRate, 60);
@@ -18,6 +18,12 @@ numberOfSegments = size(segments,2);
 
 %remove silence at start of audio file:
 [audioData, startingDataPoint] = removeSilence(audioData);
+
+%preprocessing for Jar:
+%startingDataPoint = 1;
+%procJar = procJarData(audioData, sampleRate);
+%audioData = procJar;
+
 
 %[tempFFT] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, "FFT");
 %[tempMFCC] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "MFCC");

@@ -41,6 +41,7 @@ xLabels = ["Time (s)", "Time (s)", "Time (s)"]; % "jank for now will fix later" 
 yLabels = ["Clean Anomalies", "Clean Anomalies", "Clean Anomalies"]; % "had to do it to em" - Adam
 %tiledPlot(timeArray, plotTitles, figTitle, xLabels, yLabels, tempFFT, tempMEL, tempMFCC)
 tiledPlot(timeArray, plotTitles, figTitle, xLabels, yLabels, finalAnomalies1, finalAnomalies2, finalAnomalies3)
+%tabulatedResults = tabulateAnomalies(timeArray, plotTitles, finalAnomalies1, finalAnomalies2, finalAnomalies3);
 
 %plotting:
 %{

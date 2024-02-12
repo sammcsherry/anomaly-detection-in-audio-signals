@@ -1,13 +1,15 @@
-function testPCAsnr(data)
+function testPCAsnr(audioData, frameLength, frameOverlapLength)
     
-    varianceThreshold = (50:100).';
+    varianceThreshold = (50:100).'; %change this range first 
     npts = length(varianceThreshold);
-    SNR = zeros(size(varianceThreshold));
-
-    for  i = 1:npts %change this range first 
-        [reducedData] = performPCA(data, varianceThreshold(i));
-        SNR(i) = snr(reducedData);
+    SNR = zeros(size(varianceThreshold)); % in decibels
+    
+    for  i = 1:npts 
+        [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLength, varianceThreshold(i));
+        SNR(i) = snr(anomalyVectorFFTnorm);
     end
-    figure, plot(varianceThreshold, SNR, '-o');
+    [pks,locs] = findpeaks(SNR);
+    figure, plot(varianceThreshold, SNR, '-o'), hold on, plot(pks, locs, '*', 'Color', 'red');
+    
 end
         

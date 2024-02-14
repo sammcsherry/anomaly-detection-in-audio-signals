@@ -29,8 +29,7 @@ function testPCAsnr(audioData, frameLength, frameOverlapLength)
 
  
     for  i = 1:npts 
-       % [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLength, varianceThreshold(i));
-       [anomalyVectorFFTnorm] = fftXRDTESTTTTT(audioData, frameLength, frameOverlapLength, varianceThreshold(i));
+       [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLength, varianceThreshold(i));
        
        %this SNR is relative to a sinusoidal carrier: 
        SNR(i) = snr(anomalyVectorFFTnorm); % given in dBc (decibels relative to the carrier)

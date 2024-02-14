@@ -1,7 +1,15 @@
-function [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLength)
-    % performs the steps of xrd with fft processing
+function [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLength, varargin)
+    if length(varargin) == 1
+        varianceThreshold = varargin{1};
+    end
+
     coeffsFFT = calculateFFT(audioData, frameLength, frameOverlapLength);
-    coeffsFFT = performPCA(coeffsFFT, 80);
+    
+    % only perform PCA if varianceThreshold is provided
+    if ~isempty(varianceThreshold)
+        coeffsFFT = performPCA(coeffsFFT, varianceThreshold);
+    end
+    
     anomalyVectorFFT = calculateMahalanobis(coeffsFFT);
     anomalyVectorFFTnorm = normalize(anomalyVectorFFT, 'range');
 end

@@ -7,8 +7,6 @@ function coeffs = calculateFFT(audioData, frameLength, frameOverlapLength)
     windowedFrames = bsxfun(@times, frames, window);
 
     numFrames = size(windowedFrames, 2);
-    numFrames
-    frameLength
     coeffs = zeros(numFrames, floor(frameLength / 2) + 1);
 
     % Perform FFT on each frame

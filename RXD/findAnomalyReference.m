@@ -1,7 +1,6 @@
-function [anomalyReference] = findAnomalyReference(audioData, anomalyTimes, anomalyRanges, frameLength, sampleRate, overlapPercentage)
+function [anomalyReference] = findAnomalyReference(audioData, anomalyTimes, anomalyRanges, frameLength, sampleRate, frameOverlapLength)
     [numElements,~] = size(audioData);
     totalTime = numElements/sampleRate;
-    frameOverlapLength = frameLength*overlapPercentage;
     frames = buffer(audioData, frameLength, frameOverlapLength, 'nodelay');
     frames = frames(:, 1:end-1);
     numFrames = size(frames, 2);
@@ -14,4 +13,5 @@ function [anomalyReference] = findAnomalyReference(audioData, anomalyTimes, anom
        anomalyReference(anomalyFrame:anomalyFrame+anomalyFrameRange) = 1;
        anomalyReference(anomalyFrame:anomalyFrame-anomalyFrameRange) = 1;
     end
+    anomalyReference = anomalyReference';
 end

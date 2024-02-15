@@ -1,4 +1,4 @@
-function testPCAsnr(audioData, frameLength, frameOverlapLength)
+function testPCAsnr(audioData, frameLength, frameOverlapLength, sampleRate)
     
     varianceThreshold = (50:100).'; %change this range if desired
     npts = length(varianceThreshold);
@@ -7,26 +7,7 @@ function testPCAsnr(audioData, frameLength, frameOverlapLength)
 
     %for PSNR acquisition method: (only works for 'tapping.mp3')
 
-    refSignal = zeros(1,70115); 
-
-    %anomaly 1 pos: 
-    a1min = round(1000*(42.8 - 2.6)); 
-    a1max = round(1000*(42.8 + 2.6)); 
-
-    %anomlay 2 pos: 
-    a2min = round(1000*(44.2 - 1.7)); 
-    a2max = round(1000*(44.2 + 1.7)); 
-
-    %magnitude of each anomaly: 
-    %mag1 = mean(audioData(a1min:a1max)); 
-    %mag2 = mean(audioData(a2min:a2max)); 
-    mag1 = 1;
-    mag2 = 1;
-
-    %generate "reference signal": 
-    refSignal(a1min:a1max) = mag1; 
-    refSignal(a2min:a2max) = mag2; 
-
+    refSignal = findAnomalyReference(audioData, [40, 44.2],[0.5, 0.5], frameLength, sampleRate, frameOverlapLength);
  
     for  i = 1:npts 
        [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLength, varianceThreshold(i));

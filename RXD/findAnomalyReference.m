@@ -10,7 +10,7 @@ function [anomalyReference] = findAnomalyReference(audioData, anomalyTimes, anom
     for index = 1:numAnomalies
        anomalyPosition = anomalyTimes(index)/totalTime;
        anomalyFrame = ceil(anomalyPosition*numFrames);
-       anomalyFrameRange = (anomalyRanges(index)*sampleRate)/frameLength;
+       anomalyFrameRange = ceil((anomalyRanges(index)*sampleRate)/frameLength);
        anomalyReference(anomalyFrame:anomalyFrame+anomalyFrameRange) = 1;
        anomalyReference(anomalyFrame:anomalyFrame-anomalyFrameRange) = 1;
     end

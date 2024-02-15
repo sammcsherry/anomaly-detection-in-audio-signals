@@ -6,7 +6,7 @@ function [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLen
     coeffsFFT = calculateFFT(audioData, frameLength, frameOverlapLength);
     
     % only perform PCA if varianceThreshold is provided
-    if ~isempty(varianceThreshold)
+    if ~isempty(varargin)
         coeffsFFT = performPCA(coeffsFFT, varianceThreshold);
     end
     

@@ -32,14 +32,14 @@ function inputParameterOptimiser(audioFile, domain)
         heatMapSNR = zeros(length(frameOverlapPercentage), length(frameDuration));    
         heatMapPSNR = zeros(length(frameOverlapPercentage), length(frameDuration));
     
-        %VERIFY THESE TWO LINES:
-        [audioData, sampleRate, frameLength, frameOverlapLength, ~] = extract_audio_data(audioFile,frameOverlapPercentage, frameDuration);
-        [audioData, ~] = removeSilence(audioData);
-               
         %cycle through each combination
         %matrix notation used: Aij, i = row, j = column
-        for i = frameDuration
-            for j = frameOverlapPercentage
+        for i = 1:length(frameDuration)
+            for j = 1:length(frameOverlapPercentage)
+
+                %VERIFY THESE TWO LINES:
+                [audioData, sampleRate, frameLength, frameOverlapLength, ~] = extract_audio_data(audioFile, frameOverlapPercentage(j), frameDuration(i));
+                [audioData, ~] = removeSilence(audioData);
                 [anomalyVector] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, domain);
                 
                 %SNR is relative to a sinusoidal carrier: 

@@ -18,7 +18,7 @@ function inputParameterOptimiser(audioFile, domain)
         %Frame duration sweep
         minFD = 5*10e-5; %change to variable later, depending on sample rate of file
         maxFD = 0.01; %change to variable later, depending on run time?? 
-        dt = 1*10e-5;
+        dt = 5*10e-5;
         
         %Frame overlap percentage sweep
         minFOP = 0;
@@ -49,14 +49,16 @@ function inputParameterOptimiser(audioFile, domain)
           %      heatMapPSNR(i,j) = psnr(anomalyVector, refSignal); 
             end
         end
-        %Display heat map:
-
-        figure, imagesc(heatMapSNR), hold on;
+        %Display heat map:(FIX AXIS)
+        x = [frameDuration(1), frameOverlapPercentage(end)];
+        y = [frameDuration(end), frameOverlapPercentage(1)];
+        figure, imagesc(x, y, heatMapSNR), hold on;
         xlabel('Frame Duration [s]'), ylabel('Frame overlap percentage'),
-        title('final SNR for varying input parameters')
-        colorbar
+        title('Reuslts SNR for varying input parameters'),        
+        axis tight,
+        colormap(gca,hot),
+        colorbar, %label the colorbar as SNR
         hold off;
-        %add condiiton: if it does not compute put 1 as a value 
     end
 end
 

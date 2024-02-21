@@ -1,5 +1,5 @@
-function [data,sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile, frameOverlapPercentage, frameDuration)
-    [data, sampleRate] = audioread(audiofile);
+function [data,sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extractAudioData(audioFile, frameOverlapPercentage, frameDuration)
+    [data, sampleRate] = audioread(audioFile);
     frameLength = round(frameDuration* sampleRate);
     frameOverlapLength = round(frameOverlapPercentage*frameLength);
     frameOverlapDuration = frameOverlapLength/sampleRate;

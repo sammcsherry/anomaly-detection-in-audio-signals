@@ -1,7 +1,7 @@
 function testPCAsnr(audioData, frameLength, frameOverlapLength, sampleRate)
     
     varianceThreshold = (50:100).'; %change this range if desired
-    npts = length(varianceThreshold);
+    nPoints = length(varianceThreshold);
     SNR = zeros(size(varianceThreshold)); % in dBc - decibels relative to carrier
     PSNR = zeros(size(varianceThreshold)); % in dB - decibels
 
@@ -9,7 +9,7 @@ function testPCAsnr(audioData, frameLength, frameOverlapLength, sampleRate)
 
     refSignal = findAnomalyReference(audioData, [40, 44.2],[0.5, 0.5], frameLength, sampleRate, frameOverlapLength);
  
-    for  i = 1:npts 
+    for  i = 1:nPoints 
        [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLength, varianceThreshold(i));
        
        %this SNR is relative to a sinusoidal carrier: 
@@ -21,18 +21,18 @@ function testPCAsnr(audioData, frameLength, frameOverlapLength, sampleRate)
 
     end
 
-    [pks,locs] = findpeaks(SNR);
+    [peaks,locations] = findpeaks(SNR);
     figure, plot(varianceThreshold, SNR, '-o'), hold on;
     title('SNR against Variance Threshold'),
     xlabel('Variance Threshold [%]'), ylabel('SNR [dBc]'), % dBc (decibels relative to the carrier)
-    hold on, plot((varianceThreshold(1) + locs), pks, '*', 'Color', 'red');
+    hold on, plot((varianceThreshold(1) + locations), peaks, '*', 'Color', 'red');
     hold off;
 
-    [pks,locs] = findpeaks(PSNR);
+    [peaks,locations] = findpeaks(PSNR);
     figure, plot(varianceThreshold, PSNR, '-o'), hold on;
     title('PSNR against Variance Threshold'),
     xlabel('Variance Threshold [%]'), ylabel('PSNR [dB]'), % dB (decibels)
-    hold on, plot((varianceThreshold(1) + locs), pks, '*', 'Color', 'red');
+    hold on, plot((varianceThreshold(1) + locations), peaks, '*', 'Color', 'red');
     hold off;
     
 end

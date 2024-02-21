@@ -1,7 +1,6 @@
 function [reducedData] = performPCA(data, varianceThreshold)
     %explained variance refers to the amount of variance captured by the principle components
     [~, score, ~, ~, explainedVariance] = pca(data);
-
     % determine number of components to retain based on the variance threshold
     cumulativeVariance = cumsum(explainedVariance);
     % returns first index where threshold is met

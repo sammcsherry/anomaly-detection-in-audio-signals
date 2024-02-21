@@ -1,4 +1,4 @@
-function [anomalyVectorFFTnorm] = fftXRD(audioData, frameLength, frameOverlapLength, varargin)
+function [anomalyVectorFFTnorm] = fftRXD(audioData, frameLength, frameOverlapLength, varargin)
     if length(varargin) == 1
         varianceThreshold = varargin{1};
     end

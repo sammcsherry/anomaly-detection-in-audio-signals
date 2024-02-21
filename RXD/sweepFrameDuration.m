@@ -8,7 +8,7 @@ index = 0;
 for frameDuration = frameDurations
     index = index + 1;
     tic;
-    [audioData, sampleRate, frameLength, frameOverlapLength, ~] = extract_audio_data(audioFile,frameOverlapPercentage, frameDuration);
+    [audioData, sampleRate, frameLength, frameOverlapLength, ~] = extractAudioData(audioFile,frameOverlapPercentage, frameDuration);
     [audioData, ~] = removeSilence(audioData);
     [results] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, domain);
     timeTaken(index) = toc;

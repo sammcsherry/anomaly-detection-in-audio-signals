@@ -31,8 +31,8 @@ end
 
 %[tempFFT] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, "FFT");
 %[tempMFCC] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "MFCC");
-%[tempMEL] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "MEL");
-[tempFFT, tempMFCC, tempMEL] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "ALL");
+%[tempMel] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "MEL");
+[tempFFT, tempMFCC, tempMel] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "ALL");
 %[results] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "ALL");
 % ^ just an example of variable outputs, does the same as line 24 (two above)
 
@@ -43,13 +43,13 @@ timeArray = getTimeArray(numberOfFrames, frameDuration, frameLength, frameOverla
 
 %plot cleaned anomaly scores:
 finalAnomalies1 = cleanRXDWrapperFunc(tempFFT, .9, 10);
-finalAnomalies2 = cleanRXDWrapperFunc(tempMEL, .9, 10);
+finalAnomalies2 = cleanRXDWrapperFunc(tempMel, .9, 10);
 finalAnomalies3 = cleanRXDWrapperFunc(tempMFCC, .9, 10);
 plotTitles = ["FFT", "Mel", "MFCC"];
 figTitle = "Clean Anomalies vs Time";
 xLabels = ["Time (s)", "Time (s)", "Time (s)"]; % "jank for now will fix later" - Adam
 yLabels = ["Clean Anomalies", "Clean Anomalies", "Clean Anomalies"]; % "had to do it to em" - Adam
-%tiledPlot(timeArray, plotTitles, figTitle, xLabels, yLabels, tempFFT, tempMEL, tempMFCC)
+%tiledPlot(timeArray, plotTitles, figTitle, xLabels, yLabels, tempFFT, tempMel, tempMFCC)
 tiledPlot(timeArray, plotTitles, figTitle, xLabels, yLabels, finalAnomalies1, finalAnomalies2, finalAnomalies3)
 %tabulatedResults = tabulateAnomalies(timeArray, plotTitles, finalAnomalies1, finalAnomalies2, finalAnomalies3);
 

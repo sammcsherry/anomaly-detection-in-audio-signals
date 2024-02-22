@@ -1,7 +1,9 @@
+%{
 %function inputs:
-%audioFile = "tapping.mp3";
-%audioPath = "AudioFiles/" + audioFile;
-%domain = "MFCC";
+audioFile = "tapping.mp3";
+audioPath = "AudioFiles/" + audioFile;
+domain = "MFCC";
+%}
 
 function inputParameterOptimiser(audioFile, domain)
     
@@ -22,9 +24,10 @@ function inputParameterOptimiser(audioFile, domain)
   %      maxFD = 0.01005;  
   %      dt = 1*10e-5;
 
-        minFD = 0.001; 
+        minFD = 0.0001; 
         maxFD = 0.01; 
-        dt = 0.001;
+        dt = 0.0003;
+
         %Frame overlap percentage sweep
         minFOP = 0;
         maxFOP = 0.9;
@@ -57,7 +60,12 @@ function inputParameterOptimiser(audioFile, domain)
     
                 %PSNR is calculated relative to a synthetic reference audio signal, based on known anomaly instances given by Thales:  
                 [refSignal] = findAnomalyReference(audioData, anomalyTimes, anomalyRanges, frameLength, sampleRate, frameOverlapLength);
-                heatMapPSNR(i,j) = psnr(anomalyVector, refSignal); 
+                
+                if length(anomalyVector) == length(refSignal)
+                    heatMapPSNR(j,i) = psnr(anomalyVector, refSignal); 
+                else
+                    heatMapPSNR(j,i) = 100;
+                end
 
             end
         end
@@ -67,6 +75,8 @@ function inputParameterOptimiser(audioFile, domain)
         disp(size(frameOverlapPercentage))
         disp(size(heatMapSNR))
 
+
+        %% FIX IMAGING CODE AND ENSURE AXIS ORIENTATION IS CORRECT
         %Display heat map:(FIX AXIS)
       %  x = [frameDuration(1), frameOverlapPercentage(end)];
       %  y = [frameDuration(end), frameOverlapPercentage(1)];

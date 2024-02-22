@@ -8,13 +8,17 @@ set(0,'DefaultFigureWindowStyle','docked')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
 % 1kHzSinPureTone.mp3
-audiofile = 'AudioFiles/jar.mp3';%add test to check input string is of correct format
-frameOverlapPercentage = 0.6;   %add test to check this is defined as a decimal between 0<= x < 1
-frameDuration = 25e-4;         %in seconds
+audiofile = 'AudioFiles/jar.mp3'; %add test to check input string is of correct format
+frameOverlapPercentage = 0.6;  %decimal
+frameDuration = 25e-4;         %seconds
+
+if frameOverlapPercentage<0 || frameOverlapPercentage>1
+    error('Variable "frameOverlapPercentage" must be a numerical value between 0 and 1.')
+end
+%add chack: frameDuration > sampleRate
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
-segments = splitAudioData(audioData, sampleRate, 60);
-numberOfSegments = size(segments,2);
 
 %remove silence at start of audio file:
 [audioData, startingDataPoint] = removeSilence(audioData);

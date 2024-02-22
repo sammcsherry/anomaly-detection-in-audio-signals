@@ -15,7 +15,7 @@ frameDuration = 25e-4;         %seconds
 if frameOverlapPercentage<0 || frameOverlapPercentage>1
     error('Variable "frameOverlapPercentage" must be a numerical value between 0 and 1.')
 end
-%add chack: frameDuration > sampleRate
+%add check: frameDuration > sampleRate
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);

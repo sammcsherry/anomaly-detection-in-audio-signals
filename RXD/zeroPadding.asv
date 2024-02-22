@@ -5,7 +5,7 @@ function [PaddingVecA, PaddingVecB, PaddingVecC]= zeroPadding(VecA, VecB,VecC)
     Vectors = {VecA, VecB, VecC};
     index = 1;
     for Vector = 1:numel(Vectors)
-        if iscolumn(Vectors{index});
+        if iscolumn(Vectors{index})
             newVectors{index} = Vectors{index}';
         
         elseif isrow(Vector)
@@ -24,7 +24,7 @@ function [PaddingVecA, PaddingVecB, PaddingVecC]= zeroPadding(VecA, VecB,VecC)
     
         D = length(VecC) - length(VecB);
     PaddingVecB = [zeros(1,D) VecB];
-    PaddingVecC = VecC;
+    PaddingVecC = VecC
     
     elseif (length(VecA) < length(VecC))&&(length(VecC) < length(VecB))
         C = length(VecB) - length(VecA);
@@ -32,7 +32,7 @@ function [PaddingVecA, PaddingVecB, PaddingVecC]= zeroPadding(VecA, VecB,VecC)
     
         D = length(VecB) - length(VecC);
     PaddingVecC = [zeros(1,D) VecC];
-    PaddingVecB = VecB;
+    PaddingVecB = VecB
 
     elseif (length(VecC) < length(VecA))&&(length(VecA) < length(VecB))
         C = length(VecB) - length(VecC);
@@ -40,7 +40,7 @@ function [PaddingVecA, PaddingVecB, PaddingVecC]= zeroPadding(VecA, VecB,VecC)
     
         D = length(VecB) - length(VecA);
     PaddingVecA = [zeros(1,D) VecA];
-    PaddingVecB = VecB;
+    PaddingVecB = VecB
     
     elseif (length(VecC) < length(VecB))&&(length(VecB) < length(VecA))
         C = length(VecA) - length(VecC);
@@ -48,15 +48,14 @@ function [PaddingVecA, PaddingVecB, PaddingVecC]= zeroPadding(VecA, VecB,VecC)
     
         D = length(VecA) - length(VecB);
     PaddingVecB = [zeros(1,D) VecB];
-    PaddingVecA = VecA;
-
+    PaddingVecA = VecA
     elseif (length(VecB) < length(VecA))&&(length(VecA) < length(VecC))
         C = length(VecC) - length(VecB);
     PaddingVecB = [zeros(1,C) VecB];
     
         D = length(VecC) - length(VecA);
     PaddingVecA = [zeros(1,D) VecA];
-    PaddingVecC = VecC;
+    PaddingVecC = VecC
     
     elseif (length(VecB) < length(VecC))&&(length(VecC) < length(VecA))
         C = length(VecA) - length(VecB);
@@ -64,47 +63,47 @@ function [PaddingVecA, PaddingVecB, PaddingVecC]= zeroPadding(VecA, VecB,VecC)
     
         D = length(VecA) - length(VecC);
     PaddingVecC = [zeros(1,D) VecC];
-    PaddingVecA = VecA;
+    PaddingVecA = VecA
     
     elseif (length(VecB) < length(VecC))&&(length(VecC) == length(VecA))
         C = length(VecC) - length(VecB);
     PaddingVecB = [zeros(1,C) VecB];
-    PaddingVecA = VecA;
-    PaddingVecC = VecC;
+    PaddingVecA = VecA
+    PaddingVecC = VecC
     
     elseif (length(VecB) > length(VecC))&&(length(VecC) == length(VecA))
         C = length(VecB) - length(VecC);
     PaddingVecC = [zeros(1,C) VecC];
     PaddingVecA = [zeros(1,C) VecA];
-    PaddingVecB = VecB;
+    PaddingVecB = VecB
 
     elseif (length(VecA) < length(VecC))&&(length(VecC) == length(VecB))
         C = length(VecC) - length(VecA);
     PaddingVecA = [zeros(1,C) VecA];
-    PaddingVecB = VecB;
-    PaddingVecC = VecC;
+    PaddingVecB = VecB
+    PaddingVecC = VecC
     
     elseif (length(VecA) > length(VecC))&&(length(VecC) == length(VecB))
         C = length(VecA) - length(VecC);
     PaddingVecC = [zeros(1,C) VecC];
     PaddingVecB = [zeros(1,C) VecB];
-    PaddingVecA = VecA;
+    PaddingVecA = VecA
     
     elseif (length(VecC) < length(VecA))&&(length(VecA) == length(VecB))
         C = length(VecA) - length(VecC);
     PaddingVecC = [zeros(1,C) VecC];
-    PaddingVecB = VecB;
-    PaddingVecA = VecA;
+    PaddingVecB = VecB
+    
     
     elseif (length(VecC) > length(VecA))&&(length(VecA) == length(VecB))
         C = length(VecC) - length(VecA);
     PaddingVecA = [zeros(1,C) VecA];
     PaddingVecB = [zeros(1,C) VecB];
-    PaddingVecC = VecC;
+    
 end
- PaddingVecA;
- PaddingVecB;
- PaddingVecC;
+
+PaddingVecB
+PaddingVecC
 end
 
 

@@ -8,7 +8,7 @@ set(0,'DefaultFigureWindowStyle','docked')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
 % 1kHzSinPureTone.mp3
-audiofile = 'AudioFiles/jar.mp3'; %add test to check input string is of correct format
+audioFile = 'AudioFiles/jar.mp3'; %add test to check input string is of correct format
 frameOverlapPercentage = 0.6;  %decimal
 frameDuration = 25e-4;         %seconds
 
@@ -18,15 +18,15 @@ end
 %add check: frameDuration > sampleRate
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-[audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extractAudioData(audiofile,frameOverlapPercentage, frameDuration);
+[audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extractAudioData(audioFile,frameOverlapPercentage, frameDuration);
 
 %remove silence at start of audio file:
 [audioData, startingDataPoint] = removeSilence(audioData);
 
 %preprocessing for Jar:
 %startingDataPoint = 1;
-%procJar = procJarData(audioData, sampleRate);
-%audioData = procJar;
+%processJar = processJarData(audioData, sampleRate);
+%audioData = processJar;
 
 
 %[tempFFT] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, "FFT");
@@ -42,9 +42,9 @@ numberOfFrames = size(tempFFT,2);
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameLength, frameOverlapDuration, startingDataPoint);
 
 %plot cleaned anomaly scores:
-finalAnomalies1 = cleanRXDwrapperFunc(tempFFT, .9, 10);
-finalAnomalies2 = cleanRXDwrapperFunc(tempMEL, .9, 10);
-finalAnomalies3 = cleanRXDwrapperFunc(tempMFCC, .9, 10);
+finalAnomalies1 = cleanRXDWrapperFunc(tempFFT, .9, 10);
+finalAnomalies2 = cleanRXDWrapperFunc(tempMEL, .9, 10);
+finalAnomalies3 = cleanRXDWrapperFunc(tempMFCC, .9, 10);
 plotTitles = ["FFT", "Mel", "MFCC"];
 figTitle = "Clean Anomalies vs Time";
 xLabels = ["Time (s)", "Time (s)", "Time (s)"]; % "jank for now will fix later" - Adam

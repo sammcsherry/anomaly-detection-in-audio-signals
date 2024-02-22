@@ -18,7 +18,7 @@ end
 %add check: frameDuration > sampleRate
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-[audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extract_audio_data(audiofile,frameOverlapPercentage, frameDuration);
+[audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extractAudioData(audiofile,frameOverlapPercentage, frameDuration);
 
 %remove silence at start of audio file:
 [audioData, startingDataPoint] = removeSilence(audioData);

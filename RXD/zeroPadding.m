@@ -1,5 +1,6 @@
-% Needs clarification. Bring up at next meeting as I am slightly confused -
-% Cyrus
+%Vector A, B, C ~ are just examples vectors suposed to be for the tempFFT,
+%tempMel, tempMFCC. THe names will probably need to be changed in this
+%code.
 function [PaddingVecA, PaddingVecB, PaddingVecC]= zeroPadding(VecA, VecB,VecC)
 
     Vectors = {VecA, VecB, VecC};

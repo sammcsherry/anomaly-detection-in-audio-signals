@@ -1,3 +1,4 @@
+% Not sure if this is needed - Cyrus (⌐■_■)
 function processJar = processJarData(audioData, sampleRate)
     fourierTransform = fft(audioData, sampleRate);
     fourierTransform = fftshift(fourierTransform);

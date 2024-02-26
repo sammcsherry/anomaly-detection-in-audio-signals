@@ -10,7 +10,7 @@ set(0,'DefaultFigureWindowStyle','docked')
 % 1kHzSinPureTone.mp3
 audioFile = 'AudioFiles/jar.mp3'; %add test to check input string is of correct format
 frameOverlapPercentage = 0.6;  %decimal
-frameDuration = 25e-4;         %seconds
+frameDuration = 0.1;         %seconds
 
 if frameOverlapPercentage<0 || frameOverlapPercentage>1
     error('Variable "frameOverlapPercentage" must be a numerical value between 0 and 1.')
@@ -39,7 +39,7 @@ end
 numberOfFrames = size(tempFFT,2); 
 
 %is adjustment needed on the time array?
-timeArray = getTimeArray(numberOfFrames, frameDuration, frameLength, frameOverlapDuration, startingDataPoint);
+timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
 
 %plot cleaned anomaly scores:
 finalAnomalies1 = cleanRXDWrapperFunc(tempFFT, .9, 10);
@@ -64,3 +64,8 @@ res2 = results(2,:);
 res3 = results(3,:);
 tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
 %}
+
+audioFiles = AudioFiles(); 
+anomalyData = audioFiles.getFileData("jar.mp3"); 
+
+[POD, PFA] = metricFunc(timeArray, finalAnomalies2, anomalyData) 

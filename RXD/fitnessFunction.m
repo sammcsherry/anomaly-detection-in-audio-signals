@@ -1,9 +1,9 @@
-function [cost] = fitnessFunction(anomalies, sampleRate, expectedAnomalyTimes, expectedAnomalyWidths)
+function [cost] = fitnessFunction(anomalies, expectedAnomalyTimes, expectedAnomalyWidths, timeArray)
 % Finds how close the detected anomalies
 %   Detailed explanation goes here
 cost = 0;
 for frame = 1:length(anomalies)
-    time = frame/sampleRate;
+    time = timeArray(frame);
     for index = 1:length(expectedAnomalyTimes)
         anomalyLowerBound = expectedAnomalyTimes(index) - expectedAnomalyWidths(index)/2;
         anomalyUpperBound = expectedAnomalyTimes(index) + expectedAnomalyWidths(index)/2;

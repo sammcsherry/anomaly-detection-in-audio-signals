@@ -1,12 +1,11 @@
-function [probOfDetection, probOfFalseAlarm] = metricFunc(audioLength, anomalies, anomalyData)
+function [probOfDetection, probOfFalseAlarm] = metricFunc(timeArray, anomalies, anomalyData)
 %UNTITLED2 Summary of this function goes here
 
-timeStep = audioLength / length(anomalies);
 detectedAnomalies = 0;
 falseAnomalies = 0;
 totalAnomalousDataPoints = 0;
 for frame = 1:length(anomalies)
-    time = timeStep * frame;
+    time = timeArray(frame);
     for index = 1:length(anomalyData.AnomalyCentreTimes)
         anomalyLowerBound = anomalyData.AnomalyCentreTimes(index) - anomalyData.AnomalyDuration(index)/2;
         anomalyUpperBound = anomalyData.AnomalyCentreTimes(index) + anomalyData.AnomalyDuration(index)/2;
@@ -23,6 +22,8 @@ for frame = 1:length(anomalies)
     end
 end
 
+detectedAnomalies
+totalAnomalousDataPoints
 probOfDetection = detectedAnomalies/totalAnomalousDataPoints;
 probOfFalseAlarm = falseAnomalies/length(anomalies);
 end

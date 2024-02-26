@@ -1,7 +1,7 @@
 clear;
-audioFile = "1kHzSinWithSquares.wav";
+audioFile = "jar.mp3";
 audioPath = "AudioFiles/" + audioFile;
-domain = "MFCC";
+domain = "Mel";
 
 randomAnomalyTimes = [7.2, 108.8, 111.1, 117.1];
 randomAnomalyWidths = [1.2, 1.1, 0.6, 1.1];
@@ -23,7 +23,7 @@ sinWithSquaresAnomalyWidths = [0.001, 0.001, 0.001, 0.01];
 
 
 frameDurations = 10e-3:1e-3:100e-3;
-[fitness, timeTaken] = sweepFrameDuration(audioPath, frameDurations, domain, sinWithSquaresAnomalyTimes, sinWithSquaresAnomalyWidths);
+[fitness, timeTaken] = sweepFrameDuration(audioPath, frameDurations, domain, jarAnomalyTimes, jarAnomalyWidths);
 
 plotTitles = ["Fitness vs Frame Duration", "Time Taken vs Frame Duration"];
 figTitle = domain + " with varying Frame Durations for " + audioFile;

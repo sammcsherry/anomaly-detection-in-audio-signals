@@ -8,10 +8,11 @@ index = 0;
 for frameDuration = frameDurations
     index = index + 1;
     tic;
-    [audioData, sampleRate, frameLength, frameOverlapLength, ~] = extractAudioData(audioFile,frameOverlapPercentage, frameDuration);
+    [audioData, sampleRate, frameLength, frameOverlapLength, frameOverlapDuration] = extractAudioData(audioFile,frameOverlapPercentage, frameDuration);
     [audioData, ~] = removeSilence(audioData);
     [results] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, domain);
     timeTaken(index) = toc;
-    fitness(index) = fitnessFunction(results, sampleRate, anomalyTimes, anomalyWidths);
+    timeArray = getTimeArray(length(results), frameDuration, frameOverlapDuration);
+    fitness(index) = fitnessFunction(results, anomalyTimes, anomalyWidths, timeArray);
 end
 end

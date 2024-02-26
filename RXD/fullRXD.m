@@ -34,7 +34,8 @@ if nargin > nRequiredArgs
                 tempFFT = fftRXD(audioData, frameLength, frameOverlapLength);
                 tempMel = melRXD(audioData, sampleRate, frameLength, frameOverlapLength);
                 tempMFCC = mfccRXD(audioData, sampleRate, frameLength, frameOverlapLength);
-                results = zeroPadding(tempFFT, tempMel, tempMFCC);
+                results = {tempFFT, tempMel, tempMFCC};
+                %results = zeroPadding(tempFFT, tempMel, tempMFCC);
                 %finalAnomaliesTempFFT = cleanRXDwrapperFunc(tempFFT,setThreshold, N);
                 %finalAnomaliesTempMel = cleanRXDwrapperFunc(tempMel,setThreshold, N);
                 %finalAnomaliesTempMFCC = cleanRXDwrapperFunc(tempMFCC, setThreshold,N);
@@ -52,7 +53,7 @@ if (nargout == 1)
     varargout{1} = results;
 else
     for index = 1:nargout
-        varargout{index} = results(index, :);
+        varargout{index} = results{index};
     end
 end
 

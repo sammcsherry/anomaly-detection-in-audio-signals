@@ -1,3 +1,5 @@
+% Is this function used and what for as the team and I are confused as to
+% what folder to match this to - Cyrus \(^_^)/
 function [anomalyReference] = findAnomalyReference(audioData, anomalyTimes, anomalyRanges, frameLength, sampleRate, frameOverlapLength)
     [numElements,~] = size(audioData);
     totalTime = numElements/sampleRate;

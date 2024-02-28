@@ -12,4 +12,5 @@ function anomalyReference = findAnomalyReference(audioData, anomalyTimes, anomal
        endFrame = min(numFrames, startFrame + ceil((anomalyRanges(index) / frameTime)));
        anomalyReference(startFrame:endFrame) = 1;
     end
+    anomalyReference = anomalyReference';
 end

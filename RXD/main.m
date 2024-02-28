@@ -5,6 +5,13 @@ clear;
 close all;
 set(0,'DefaultFigureWindowStyle','docked')
 
+addpath('AudioFiles\')
+addpath('Pre-Processing\')
+addpath('RXD\')
+addpath('Post Processing\')
+addpath('Miscellaneous\')
+addpath('Results\')
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
 % 1kHzSinPureTone.mp3

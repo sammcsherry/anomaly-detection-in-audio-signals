@@ -13,10 +13,7 @@ function inputParameterOptimiser(audioFile, domain)
     if domain == "all"
         error("domain can only be 'MFCC', 'MEL', or 'FFT'.")
     else 
-   
-        %call function to generate reference audio:
-       % refSignal = %call func here
-    
+      
         %set parameters over which to sweep:
     
         %Frame duration sweep
@@ -29,14 +26,15 @@ function inputParameterOptimiser(audioFile, domain)
         dt = 0.0003;
 
         %Frame overlap percentage sweep
-        minFOP = 0;
-        maxFOP = 0.9;
+        minFOP = 0.1;
+        maxFOP = 0.5;
         dp = 0.1;
     
-       % frameDuration = minFD:dt:maxFD;
-        frameDuration = maxFD:-dt:minFD;
-        frameOverlapPercentage = minFOP:dp:maxFOP;
-    
+        frameDuration = minFD:dt:maxFD;
+        disp(frameDuration)
+        frameOverlapPercentage = maxFOP:-dp:minFOP;
+        %disp(frameOverlapPercentage)
+
         %initialise matrix: y axis: overlap %, xaxis, frameduration
         heatMapSNR = zeros(length(frameOverlapPercentage), length(frameDuration));  
 
@@ -47,33 +45,30 @@ function inputParameterOptimiser(audioFile, domain)
         heatMapPSNR = zeros(length(frameOverlapPercentage), length(frameDuration));
         
         %cycle through each combination
-        %matrix notation used: Aij, i = row, j = column
+        %matrix notation used: Aij, i = column, j=row
         for i = 1:length(frameDuration)
             for j = 1:length(frameOverlapPercentage)
-
+                
+                %fprintf('window lenght %.1f ', i)
                 [audioData, sampleRate, frameLength, frameOverlapLength, ~] = extractAudioData(audioPath, frameOverlapPercentage(j), frameDuration(i));
                 [audioData, ~] = removeSilence(audioData);
                 [anomalyVector] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, domain);
                 
+                numFrames = length(anomalyVector);
                 %SNR is relative to a sinusoidal carrier: 
-                %heatMapSNR(j,i) = snr(anomalyVector); % given in dBc (decibels relative to the carrier)
+                heatMapSNR(j,i) = snr(anomalyVector); % given in dBc (decibels relative to the carrier)
     
                 %PSNR is calculated relative to a synthetic reference audio signal, based on known anomaly instances given by Thales:  
-                [refSignal] = findAnomalyReference(audioData, anomalyTimes, anomalyRanges, frameLength, sampleRate, frameOverlapLength);
+                refSignal = findAnomalyReference(audioData, anomalyTimes, anomalyRanges, frameLength, sampleRate, numFrames);
+              %  fprintf('anomaly %.0f, ref %.0f', size(anomalyVector,1), size(refSignal,1))
+                heatMapPSNR(j,i) = psnr(anomalyVector, refSignal); 
                 
-                if length(anomalyVector) == length(refSignal)
-                    heatMapPSNR(j,i) = psnr(anomalyVector, refSignal); 
-                else
-                    heatMapPSNR(j,i) = 100;
-                end
-
+                warning('off')
             end
         end
-
-
-        disp(size(frameDuration))
-        disp(size(frameOverlapPercentage))
-        disp(size(heatMapSNR))
+       % disp(size(frameDuration))
+       % disp(size(frameOverlapPercentage))
+       % disp(size(heatMapSNR))
 
 
         %% FIX IMAGING CODE AND ENSURE AXIS ORIENTATION IS CORRECT
@@ -89,7 +84,7 @@ function inputParameterOptimiser(audioFile, domain)
        % colorbar, %label the colorbar as SNR
         %hold off;
 
-
+        %{
         %Display heat map:(FIX AXIS)
         x = [frameDuration(1), frameOverlapPercentage(end)];
         y = [frameDuration(end), frameOverlapPercentage(1)];
@@ -100,11 +95,18 @@ function inputParameterOptimiser(audioFile, domain)
         colormap(gca,hot),
         colorbar, %label the colorbar as SNR
         hold off;
+        %}
 
+     %   figure, hold on;
+      %  heatmap(frameDuration, frameOverlapPercentage,heatMapSNR);
+      %  xlabel('Frame Duration [s]'), ylabel('Frame overlap percentage'),
+      %  title('Reuslts SNR for varying input parameters'), 
+       % colormap('hot')
+       % colorbar;
+      %  hold off;
 
-        %heatmap(frameDuration, frameOverlapPercentage,heatMapSNR);
-        %colormap('hot')
-        %colorbar;
+       figure, imagesc(heatMapPSNR), title('psnr')
+       figure, imagesc(heatMapSNR), title('snr')
 
     end
 end

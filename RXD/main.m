@@ -9,7 +9,7 @@ set(0,'DefaultFigureWindowStyle','docked')
 % USER DEFINED INPUTS:
 % 1kHzSinPureTone.mp3
 audioFile = 'AudioFiles/jar.mp3'; %add test to check input string is of correct format
-frameOverlapPercentage = 0.6;  %decimal
+frameOverlapPercentage = 0.5;  %decimal
 frameDuration = 0.1;         %seconds
 
 if frameOverlapPercentage<0 || frameOverlapPercentage>1
@@ -42,9 +42,9 @@ numberOfFrames = size(tempFFT,2);
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
 
 %plot cleaned anomaly scores:
-finalAnomalies1 = cleanRXDWrapperFunc(tempFFT, .9, 10);
-finalAnomalies2 = cleanRXDWrapperFunc(tempMel, .9, 10);
-finalAnomalies3 = cleanRXDWrapperFunc(tempMFCC, .9, 10);
+finalAnomalies1 = cleanRXDwrapperFunc(tempFFT, .9, 10);
+finalAnomalies2 = cleanRXDwrapperFunc(tempMel, .9, 10);
+finalAnomalies3 = cleanRXDwrapperFunc(tempMFCC, .9, 10);
 plotTitles = ["FFT", "Mel", "MFCC"];
 figTitle = "Clean Anomalies vs Time";
 xLabels = ["Time (s)", "Time (s)", "Time (s)"]; % "jank for now will fix later" - Adam

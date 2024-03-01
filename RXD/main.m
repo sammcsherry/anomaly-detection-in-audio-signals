@@ -15,7 +15,7 @@ addpath('Results\')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
 % 1kHzSinPureTone.mp3
-audioFile = 'AudioFiles/10534_SSW_20170429.ogg'; %add test to check input string is of correct format
+audioFile = 'AudioFiles/jar.mp3'; %add test to check input string is of correct format
 frameOverlapPercentage = 0.5;  %decimal
 frameDuration = 0.1;         %seconds
 
@@ -41,7 +41,7 @@ end
 %[tempMel] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "MEL");
 [tempFFT, tempMFCC, tempMel] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "ALL");
 %[results] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "ALL");
-% ^ just an example of variable outputs, does the same as line 24 (two above)
+% ^ just an example of variable outputs, does the same as current line -2 (two above)
 
 numberOfFrames = size(tempFFT,2); 
 
@@ -73,6 +73,6 @@ tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
 %}
 
 audioFiles = AudioFiles(); 
-anomalyData = audioFiles.getFileData("10534_SSW_20170429.ogg"); 
+anomalyData = audioFiles.getFileData("jar.mp3"); 
 
 [POD, PFA] = metricFunc(timeArray, finalAnomalies2, anomalyData) 

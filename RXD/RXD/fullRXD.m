@@ -35,7 +35,7 @@ if nargin > nRequiredArgs
                 tempMel = melRXD(audioData, sampleRate, frameLength, frameOverlapLength);
                 tempMFCC = mfccRXD(audioData, sampleRate, frameLength, frameOverlapLength);
                 [tempFFT, tempMel, tempMFCC] = zeroPaddingV2(tempFFT, tempMel, tempMFCC);
-                results = {tempFFT, tempMel, tempMFCC};
+                results = [tempFFT; tempMel; tempMFCC];
                 %results = zeroPadding(tempFFT, tempMel, tempMFCC);
                 %finalAnomaliesTempFFT = cleanRXDwrapperFunc(tempFFT,setThreshold, N);
                 %finalAnomaliesTempMel = cleanRXDwrapperFunc(tempMel,setThreshold, N);
@@ -51,10 +51,11 @@ end
 
 % handles variable number of output requests
 if (nargout == 1)
-    varargout{1} = results;
+    varargout = results;
 else
+    varargout = cell(nargout, 1);
     for index = 1:nargout
-        varargout{index} = results{index};
+        varargout{index} = results(index, :);
     end
 end
 

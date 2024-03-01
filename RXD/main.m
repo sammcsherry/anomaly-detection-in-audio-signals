@@ -15,7 +15,7 @@ addpath('Results\')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
 % 1kHzSinPureTone.mp3
-audioFile = 'AudioFiles/jar.mp3'; %add test to check input string is of correct format
+audioFile = 'AudioFiles/10534_SSW_20170429.ogg'; %add test to check input string is of correct format
 frameOverlapPercentage = 0.5;  %decimal
 frameDuration = 0.1;         %seconds
 
@@ -73,6 +73,6 @@ tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
 %}
 
 audioFiles = AudioFiles(); 
-anomalyData = audioFiles.getFileData("jar.mp3"); 
+anomalyData = audioFiles.getFileData("10534_SSW_20170429.ogg"); 
 
 [POD, PFA] = metricFunc(timeArray, finalAnomalies2, anomalyData) 

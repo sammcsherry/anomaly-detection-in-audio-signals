@@ -15,9 +15,9 @@ addpath('Results\')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
 % 1kHzSinPureTone.mp3
-audioFile = 'AudioFiles/jar.mp3'; %add test to check input string is of correct format
-frameOverlapPercentage = 0.5;  %decimal
-frameDuration = 0.1;         %seconds
+audioFile = '11254_COR_20190904.ogg'; %add test to check input string is of correct format
+frameOverlapPercentage = 0.6;   %decimal
+frameDuration = 0.05;           %seconds
 
 if frameOverlapPercentage<0 || frameOverlapPercentage>1
     error('Variable "frameOverlapPercentage" must be a numerical value between 0 and 1.')
@@ -49,9 +49,9 @@ numberOfFrames = size(tempFFT,2);
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
 
 %plot cleaned anomaly scores:
-finalAnomalies1 = cleanRXDwrapperFunc(tempFFT, .9, 10);
-finalAnomalies2 = cleanRXDwrapperFunc(tempMel, .9, 10);
-finalAnomalies3 = cleanRXDwrapperFunc(tempMFCC, .9, 10);
+finalAnomalies1 = cleanRXDWrapperFunc(tempFFT, .9, 10);
+finalAnomalies2 = cleanRXDWrapperFunc(tempMel, .9, 10);
+finalAnomalies3 = cleanRXDWrapperFunc(tempMFCC, .9, 10);
 plotTitles = ["FFT", "Mel", "MFCC"];
 figTitle = "Clean Anomalies vs Time";
 xLabels = ["Time (s)", "Time (s)", "Time (s)"]; % "jank for now will fix later" - Adam
@@ -73,6 +73,14 @@ tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
 %}
 
 audioFiles = AudioFiles(); 
-anomalyData = audioFiles.getFileData("jar.mp3"); 
+anomalyData = audioFiles.getFileData(audioFile); 
 
-[POD, PFA] = metricFunc(timeArray, finalAnomalies2, anomalyData) 
+
+[POD, PFA] = metricFunc(timeArray, finalAnomalies1, anomalyData) ;
+disp("FFT:"); disp(["POD:", POD]); disp(["PFA:", PFA]);
+
+[POD, PFA] = metricFunc(timeArray, finalAnomalies2, anomalyData) ;
+disp("MEL:"); disp(["POD:", POD]); disp(["PFA:", PFA]);
+
+[POD, PFA] = metricFunc(timeArray, finalAnomalies3, anomalyData) ;
+disp("MFCC:");  disp(["POD:", POD]); disp(["PFA:", PFA]);

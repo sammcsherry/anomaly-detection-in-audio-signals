@@ -42,7 +42,7 @@ if nargin > nRequiredArgs
                 %finalAnomaliesTempMFCC = cleanRXDwrapperFunc(tempMFCC, setThreshold,N);
                 %finalAnomalies = [finalAnomaliesTempFFT; finalAnomaliesTempMel; finalAnomaliesTempMFCC];
             case "cleananomalies"
-                results = cleanRXDwrapperFunc(results, setThreshold, N);
+                results = cleanRXDWrapperFunc(results, setThreshold, N);
             otherwise
                 error("Unrecognised optional input given: " + varargin{index})
         end
@@ -50,6 +50,7 @@ if nargin > nRequiredArgs
 end
 
 % handles variable number of output requests
+%{
 if (nargout == 1)
     varargout = results;
 else
@@ -58,8 +59,11 @@ else
         varargout{index} = results(index, :);
     end
 end
+%}
 
-
-  
+varargout = cell(nargout, 1);
+for index = 1:nargout
+    varargout{index} = results(index, :);
+end
 
 end

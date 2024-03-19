@@ -12,6 +12,7 @@ classdef AudioFiles
             obj.audioMap('jar.mp3') = struct('AnomalyCentreTimes', [46.9, 47.4, 48], 'AnomalyDuration', [0.5, 0.5, 0.5]);
             obj.audioMap('random.mp3') = struct('AnomalyCentreTimes', [7.2, 108.8, 111.1, 117.1], 'AnomalyDuration', [1.2, 1.1, 0.6, 1.1]);
             obj.audioMap('tapping.mp3') = struct('AnomalyCentreTimes', [44.2, 42.8], 'AnomalyDuration', [1.7, 2.6]);
+            obj.audioMap('1kHzSinWithSquares.wav') = struct('AnomalyCentreTimes', [3.005, 5.005, 5.505, 7.05], 'AnomalyDuration', [0.01, 0.01, 0.01, 0.1])
         end
         
         % Access data for a specific file

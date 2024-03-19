@@ -15,7 +15,7 @@ addpath('Results\')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
 % 1kHzSinPureTone.mp3
-audioFile = '11254_COR_20190904.ogg'; %add test to check input string is of correct format
+audioFile = '1kHzSinWithSquares.wav'; %add test to check input string is of correct format
 frameOverlapPercentage = 0.6;   %decimal
 frameDuration = 0.05;           %seconds
 

@@ -16,8 +16,8 @@ addpath('Results\')
 % USER DEFINED INPUTS:
 % 1kHzSinPureTone.mp3
 audioFile = '1kHzSinWithSquares.wav'; %add test to check input string is of correct format
-frameOverlapPercentage = 0.6;   %decimal
-frameDuration = 0.05;           %seconds
+frameOverlapPercentage = 0.8;   %decimal
+frameDuration = 0.009;           %seconds
 
 if frameOverlapPercentage<0 || frameOverlapPercentage>1
     error('Variable "frameOverlapPercentage" must be a numerical value between 0 and 1.')

@@ -37,9 +37,12 @@ end
 
 
 %[tempFFT] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, "FFT");
+[tempPCA] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, "PCA", 8);
+  
+
 %[tempMFCC] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "MFCC");
 %[tempMel] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "MEL");
-[tempFFT, tempMFCC, tempMel] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "ALL");
+%[tempFFT, tempMFCC, tempMel] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "ALL");
 %[results] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "ALL");
 % ^ just an example of variable outputs, does the same as current line -2 (two above)
 

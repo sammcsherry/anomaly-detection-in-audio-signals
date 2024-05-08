@@ -21,6 +21,9 @@ if nargin > nRequiredArgs
                 if ~isnumeric(setThreshold)
                     error("The input for setThreshold must be a numeric data type")
                 end
+
+            case "pca"; numComponents = varargin{index + 1};
+                results = fftRXD(audioData, frameLength, frameOverlapLength, numComponents);
             case "fft"
                 results = fftRXD(audioData, frameLength, frameOverlapLength);
                 %finalAnomalies = cleanRXDwrapperFunc(results,setThreshold, N);

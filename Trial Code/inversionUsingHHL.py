@@ -20,7 +20,7 @@ tridi_matrix = TridiagonalToeplitz(1, 1, -1 / 3)
 tridi_solution = HHL().solve(tridi_matrix, vector)
 """
 
-NUM_QUBITS = 2
+NUM_QUBITS = int(input("Input number of qubits (<5, plz): "))
 MATRIX_SIZE = 2 ** NUM_QUBITS
 # entries of the tridiagonal Toeplitz symmetric matrix
 # pylint: disable=invalid-name
@@ -35,13 +35,17 @@ vector = np.array([1] + [0]*(MATRIX_SIZE - 1))
 # run the algorithms
 classical_solution = NumPyLinearSolver(
                         ).solve(matrix, vector / np.linalg.norm(vector))
+startTime = time.time()
 naive_hhl_solution = HHL().solve(matrix, vector)
+endTime = time.time()
+naiveTime = endTime - startTime
+
 
 startTime = time.time()
 tridi_matrix = TridiagonalToeplitz(NUM_QUBITS, a, b)
 tridi_solution = HHL().solve(tridi_matrix, vector)
 endTime = time.time()
-
+tridiTime = endTime - startTime
 
 print(classical_solution)
 print(naive_hhl_solution)
@@ -69,5 +73,4 @@ print('tridi raw solution vector:', tridi_full_vector)
 #print(tridi_sv.shape)
 
 
-print(f"Elapsed time for tridi_solution: {endTime - startTime} for {NUM_QUBITS} Qubits")
-
+print(f"Number of qubits: {NUM_QUBITS}, naive time: {naiveTime}, tridi time: {tridiTime}")

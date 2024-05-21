@@ -1,0 +1,6 @@
+qiskit==1.0.2
+qiskit-algorithms==0.3.0
+qiskit-ibm-provider==0.7.1
+qiskit-ibm-runtime==0.13.0
+qiskit-terra==0.25.2.1
+git+https://github.com/anedumla/quantum_linear_solvers

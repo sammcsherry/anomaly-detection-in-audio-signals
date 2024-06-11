@@ -8,6 +8,7 @@ import time
 
 
 #algorithm_globals.massive=True
+#allows large matrices for higher order qubits
 qiskit.utils.algorithm_globals.massive=True
 
 """ method 1
@@ -20,19 +21,21 @@ tridi_matrix = TridiagonalToeplitz(1, 1, -1 / 3)
 tridi_solution = HHL().solve(tridi_matrix, vector)
 """
 
-NUM_QUBITS = int(input("Input number of qubits (<5, plz): "))
+NUM_QUBITS = int(input("Input number of qubits (<5 idealy): "))
 MATRIX_SIZE = 2 ** NUM_QUBITS
 # entries of the tridiagonal Toeplitz symmetric matrix
 # pylint: disable=invalid-name
 a = 1
 b = -1/3
 
+# test matrix 
 matrix = diags([b, a, b],
                [-1, 0, 1],
                shape=(MATRIX_SIZE, MATRIX_SIZE)).toarray()
 
+# test vector
 vector = np.array([1] + [0]*(MATRIX_SIZE - 1))
-# run the algorithms
+
 classical_solution = NumPyLinearSolver(
                         ).solve(matrix, vector / np.linalg.norm(vector))
 startTime = time.time()

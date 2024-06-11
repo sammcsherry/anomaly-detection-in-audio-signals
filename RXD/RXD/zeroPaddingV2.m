@@ -1,6 +1,4 @@
 function [vec1, vec2, vec3] = zeroPaddingV2(vec1, vec2, vec3)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
 
 length1 = length(vec1);
 length2 = length(vec2);

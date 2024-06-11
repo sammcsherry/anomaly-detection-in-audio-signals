@@ -8,37 +8,24 @@ function [reducedData] = performPCA(data, numComponents)
     % truncate data based on number of principle components calculated
     reducedData = score(:, 1:numComponents);
     
-    disp(['hi'])
-    ifdjghiodshfboisdfdrd
+
     %get b state and write to file
-    bStateMean = mean(reducedData, 1);
-    disp(size(data))
-
-    %initialise empty bStateArray.
-    %each col is one bState vector. 
-
-    bStateArray = zeros(numComponents, size(data,1)); % is this (data,1 or 2)???
+    bState = mean(reducedData, 1);
+    bState = bState / norm(bState);
+    bState = bState';
     
-    for frame_num = 1:size(data,1) % is this 1 or 2 (rows or cols)
-        bState = bStateMean - data(:,frame_num); %data(frame_num, :) ;
-        
-        bState = bState / norm(bState);
-        bState = bState';
-
-        bStateArray(:,frame_num) = bState;
-
-    end
-
-    
+    % Base file name
     base_file_name = 'b_vector.txt';
     file_name = base_file_name;
-    
+
     counter = 1;
     while exist(file_name, 'file')
+        % Append a digit to the file name
         file_name = [base_file_name(1:end-4) '_' num2str(counter) '.txt'];
         counter = counter + 1;
     end
+    % Write the matrix to the file
     dlmwrite(file_name, bState, 'delimiter', '\t');
     disp(['Matrix written to ' file_name]);
-    
+ 
 end

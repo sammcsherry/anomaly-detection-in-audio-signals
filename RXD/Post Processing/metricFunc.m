@@ -1,5 +1,4 @@
 function [probOfDetection, probOfFalseAlarm] = metricFunc(timeArray, anomalies, anomalyData)
-%UNTITLED2 Summary of this function goes here
 
 detectedAnomalies = 0;
 falseAnomalies = 0;

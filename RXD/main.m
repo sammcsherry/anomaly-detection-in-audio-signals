@@ -15,7 +15,7 @@ addpath('Results\')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER DEFINED INPUTS:
 % 1kHzSinPureTone.mp3
-audioFile = '1kHzSinWithSquares.wav'; %add test to check input string is of correct format
+audioFile = '1kHzSinWithSquares.wav';
 frameOverlapPercentage = 0.8;   %decimal
 frameDuration = 0.009;           %seconds
 
@@ -35,20 +35,15 @@ end
 %processJar = processJarData(audioData, sampleRate);
 %audioData = processJar;
 
-
-%[tempFFT] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, "FFT");
 [tempPCA] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, "PCA", 8);
-  
+[tempFFT, tempMFCC, tempMel] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "ALL");
 
+% uncomment for other examples:
+%[tempFFT] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate, "FFT");
 %[tempMFCC] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "MFCC");
 %[tempMel] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "MEL");
-%[tempFFT, tempMFCC, tempMel] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "ALL");
-%[results] = fullRXD(audioData, frameOverlapLength, frameLength, sampleRate,  "ALL");
-% ^ just an example of variable outputs, does the same as current line -2 (two above)
 
-numberOfFrames = size(tempFFT,2); 
-
-%is adjustment needed on the time array?
+numberOfFrames = size(tempPCA,2); 
 timeArray = getTimeArray(numberOfFrames, frameDuration, frameOverlapDuration);
 
 %plot cleaned anomaly scores:
@@ -57,24 +52,15 @@ finalAnomalies2 = cleanRXDWrapperFunc(tempMel, .9, 10);
 finalAnomalies3 = cleanRXDWrapperFunc(tempMFCC, .9, 10);
 plotTitles = ["FFT", "Mel", "MFCC"];
 figTitle = "Clean Anomalies vs Time";
-xLabels = ["Time (s)", "Time (s)", "Time (s)"]; % "jank for now will fix later" - Adam
-yLabels = ["Clean Anomalies", "Clean Anomalies", "Clean Anomalies"]; % "had to do it to em" - Adam
-%tiledPlot(timeArray, plotTitles, figTitle, xLabels, yLabels, tempFFT, tempMel, tempMFCC)
+xLabels = ["Time (s)", "Time (s)", "Time (s)"]; 
+yLabels = ["Clean Anomalies", "Clean Anomalies", "Clean Anomalies"]; 
 tiledPlot(timeArray, plotTitles, figTitle, xLabels, yLabels, finalAnomalies1, finalAnomalies2, finalAnomalies3)
-%tabulatedResults = tabulateAnomalies(timeArray, plotTitles, finalAnomalies1, finalAnomalies2, finalAnomalies3);
 
-%plotting:
-%{
-plotTitles = ["FFT", "Mel", "MFCC"];
-figTitle = "Anomalies vs Time";
-tiledPlot(timeArray, plotTitles, figTitle, tempFFT, tempMel, tempMFCC )
+%plot PCA results
+figure, plot(timeArray, tempPCA), title('PCA'), xlabel("Time (s)"), ylabel("Clean Anomalies");
 
-res1 = results(1,:);
-res2 = results(2,:);
-res3 = results(3,:);
-tiledPlot(timeArray, plotTitles, figTitle, res1, res2, res3 )
-%}
 
+%Get POD and PFA values:
 audioFiles = AudioFiles(); 
 anomalyData = audioFiles.getFileData(audioFile); 
 

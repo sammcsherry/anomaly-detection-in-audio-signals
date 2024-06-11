@@ -1,5 +1,4 @@
-% Is this function used and what for as the team and I are confused as to
-% what folder to match this to - Cyrus \(^_^)/
+
 % it's used to find the ideal signal so that we can perform signal to noise
 % ratio which requires a reference signal
 function anomalyReference = findAnomalyReference(audioData, anomalyTimes, anomalyRanges, frameLength, sampleRate, numFrames)

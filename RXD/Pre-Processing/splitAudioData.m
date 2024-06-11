@@ -1,4 +1,4 @@
-% Are we using this - Cyrus ໒(⊙ᴗ⊙)७✎▤
+
 function segments = splitAudioData(audioData, sampleRate, windowLength)
     % Calculate how many samples in 1 minute of audio
     samplesPerMinute = sampleRate * windowLength;

@@ -5,7 +5,8 @@ function coeffs = calculateFFT(audioData, frameLength, frameOverlapLength)
     % apply windowing
     window = hamming(frameLength);
     windowedFrames = bsxfun(@times, frames, window);
-% maybe use numberOfFrames ?? - cyrus
+
+
     numFrames = size(windowedFrames, 2);
     coeffs = zeros(numFrames, floor(frameLength / 2) + 1);
 

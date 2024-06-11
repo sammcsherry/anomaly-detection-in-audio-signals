@@ -18,7 +18,7 @@ function cleanedAnomalies = cleanAnomalies(thresholdedData, neighbours)
    pd = fitdist(averageVect, 'Normal' );
    mu = mean(pd);
    sd = std(pd);
-% Maybe use < instead of lt in line 22? - Cyrus
+
    ineq = lt(averageVect, mu+2.5*sd); 
    averageVect(ineq) = 0;
 
